@@ -1,0 +1,8 @@
+*.html
+*.pdf
+*_files/
+/.luarc.json
+
+/.quarto/
+# ignore example.html used for quick rendering tests
+example.html

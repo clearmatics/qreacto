@@ -1,2 +1,3 @@
-# qreacto
-Quarto extension to inject React components into quarto markdown (qmd) files
+# React components in Quarto
+
+Run standalone react components
