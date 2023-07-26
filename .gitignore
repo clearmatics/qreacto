@@ -4,5 +4,8 @@
 /.luarc.json
 
 /.quarto/
-# ignore example.html used for quick rendering tests
-example.html
+
+# For development the following files are ignored
+example.html 
+_quarto.yml
+qreacto.qmd
