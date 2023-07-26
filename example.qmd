@@ -1,5 +1,5 @@
 ---
-title: Iconify Quarto Extension
+title: React Quarto Extension
 format: html
 filters:
   - _extensions/reacto/reacto.lua
