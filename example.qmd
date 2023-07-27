@@ -10,6 +10,8 @@ filters:
 
 {{< react UseEffect >}}
 
+{{< react Greeting type="typescript">}}
+
 dont include imports of react or any of its names imports, because they are available globally?
 
 This iteration, if you want to use useEffect and useState, you must use the name space, eg React.useEffect, React.useState

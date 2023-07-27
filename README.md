@@ -44,6 +44,23 @@ Next add the shortcode into the `.qmd` file you want the component to show in.
 {{< react MyComponent >}}
 ```
 
+If you want to use **typescript**, you can add the following attribute
+
+``` bash
+{{< react MyComponent type="typescript" >}}
+```
+
+Dont forget to save your file with the `.tsx` extension
+
 Note that the name of the component and the name of the file must match in order for the filter to pull the component in. So the component should be saved at `components/MyComponent.jsx`
 
+or for typescript
+
+`components/MyComponent.tsx`
+
+## Adding imports
+
+Because the modules are being imported and run in the browser, it is not being bundled. In order to leverage third party packages, make sure it is available as an es6 module [here](https://www.jsdelivr.com/esm) or [here](https://esm.run)
+
+Then import it and use accordingly, 
 

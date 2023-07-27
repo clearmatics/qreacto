@@ -16,7 +16,7 @@ local function ensure_react_dom()
     })
 end
 
--- include babel transpiler
+-- include babel transpiler (standalone)
 local function ensure_babel_transpiler()
     quarto.doc.add_html_dependency({
         name = 'babel',
@@ -27,12 +27,17 @@ end
 
 -- includes reactDOM.render into the document, with provided component name and element id
 -- inject the component into the script tag
-local function add_react_element(ComponentName, elementId)
+local function add_react_element(ComponentName, elementId, extension)
     print(ComponentName .. " >>>> " .. elementId)
-    local path = quarto.project.directory .. '/components/' .. ComponentName .. '.jsx'
+    local path = quarto.project.directory .. '/components/' .. ComponentName .. '.' .. extension
+    local presets = 'env,react'
 
+    -- check if extension is equal to typescript
+    if extension == 'tsx' then
+        presets = presets .. ',typescript'
+    end
     quarto.doc.include_text('after-body',
-        '<script type="text/babel">' ..
+        '<script type="text/babel" data-type="module" data-presets="' .. presets .. '">' ..
         '' .. read_file_to_string(path) ..
         'ReactDOM.render(' ..
         ' <React.StrictMode> ' ..
@@ -89,9 +94,16 @@ return {
             end
 
             local componentId = 'react-' .. componentname .. '-' .. randomString(8)
+            local componentType = pandoc.utils.stringify(kwargs["type"])
+            local fileType = 'jsx'
+
+            -- check it is not empty and it is a typescript component
+            if not is_empty(componentType) and componentType == 'typescript' then
+                fileType = 'tsx'
+            end
 
             -- Add the React injection
-            add_react_element(componentname, componentId)
+            add_react_element(componentname, componentId, fileType)
 
             -- Create the div element to place the component in
             return pandoc.RawInline(
