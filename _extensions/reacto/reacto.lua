@@ -25,12 +25,24 @@ local function ensure_babel_transpiler()
     })
 end
 
+-- Change babel presets to use imports rather than require (es6)
+local function ensure_imports_babel_preset()
+    quarto.doc.add_html_dependency({
+        name = 'babel-presets',
+        version = '1.0.0',
+        scripts = { "babel-presets.js" }
+    })
+end
+
 -- includes reactDOM.render into the document, with provided component name and element id
 -- inject the component into the script tag
 local function add_react_element(ComponentName, elementId, extension)
     print(ComponentName .. " >>>> " .. elementId)
     local path = quarto.project.directory .. '/components/' .. ComponentName .. '.' .. extension
-    local presets = 'env,react'
+
+    -- default presets env-plus is needed for imports to work in es6 mode
+    -- react is required because... React
+    local presets = 'env-plus,react'
 
     -- check if extension is equal to typescript
     if extension == 'tsx' then
@@ -86,6 +98,7 @@ return {
             ensure_react()
             ensure_react_dom()
             ensure_babel_transpiler()
+            ensure_imports_babel_preset()
 
             local componentname = pandoc.utils.stringify(args[1])
 

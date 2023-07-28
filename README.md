@@ -60,7 +60,35 @@ or for typescript
 
 ## Adding imports
 
-Because the modules are being imported and run in the browser, it is not being bundled. In order to leverage third party packages, make sure it is available as an es6 module [here](https://www.jsdelivr.com/esm) or [here](https://esm.run)
+We can use esms and CDNs to deliver imports whilst in the browsers. Here's is an example of using imports with esm.run
+
+```
+import * as math from 'https://esm.run/math';
+		
+
+function UseEffect() {
+  const [count, setCount] = React.useState(0);
+
+  const a = 5;
+  const b = 10;
+
+  // Using the 'add' function from the Math module
+  const sum = math.default.add(a, b);
+  const handleClick = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={handleClick}>Increment</button>
+      <p>Math Sum {sum}</p>
+    </div>
+  );
+}
+```
+
+The modules are being imported and run in the browser, it is not being bundled. In order to leverage third party packages, make sure it is available as an es6 module [here](https://www.jsdelivr.com/esm) or [here](https://esm.run)
 
 Then import it and use accordingly, 
 
