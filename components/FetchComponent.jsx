@@ -1,3 +1,4 @@
+import ButtonExample from "./ButtonExample";
 /**
  * An example of react with fetch
  * @returns 
@@ -7,7 +8,7 @@ function FetchComponent() {
   
     // Function to fetch data from the endpoint
     function fetchData() {
-      fetch(`https://dummyjson.com/products/${data.length + 1}`)
+      fetch(`https://d3sk8vqz7pzy2a.cloudfront.net/on_chain_totals.json`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -25,6 +26,7 @@ function FetchComponent() {
   
     return (
       <div>
+        <ButtonExample />
         <button onClick={fetchData}>Fetch Data</button>
         <div>
           {data ? (

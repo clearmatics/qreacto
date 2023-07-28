@@ -9,3 +9,5 @@ function ButtonExample() {
       </div>
     );
   };
+
+  export default ButtonExample;

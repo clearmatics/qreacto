@@ -1,3 +1,6 @@
+local component_folder = 'components'
+
+--todo use a debugging flag stored in _quarto.yaml to handle logging
 -- include react dependencies
 local function ensure_react()
     quarto.doc.add_html_dependency({
@@ -38,9 +41,9 @@ end
 -- inject the component into the script tag
 local function add_react_element(ComponentName, elementId, extension)
     print(ComponentName .. " >>>> " .. elementId)
-    local path = quarto.project.directory .. '/components/' .. ComponentName .. '.' .. extension
+    local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName .. '.' .. extension
 
-    -- default presets env-plus is needed for imports to work in es6 mode
+    -- default presets env-plus is needed for imports to work with esms
     -- react is required because... React
     local presets = 'env-plus,react'
 
@@ -50,7 +53,7 @@ local function add_react_element(ComponentName, elementId, extension)
     end
     quarto.doc.include_text('after-body',
         '<script type="text/babel" data-type="module" data-presets="' .. presets .. '">' ..
-        '' .. read_file_to_string(path) ..
+        '' .. read_file_to_string(path, extension) ..
         'ReactDOM.render(' ..
         ' <React.StrictMode> ' ..
         '   <' .. ComponentName .. '/> ' ..
@@ -61,9 +64,42 @@ local function add_react_element(ComponentName, elementId, extension)
     )
 end
 
+-- given a component as a string, look for imports
+local function modify_with_imports(content, extension)
+    local import = string.find(content, "import")
+    local imported_content = {}
+    local modified_content = content
+    if import then
+        print('import found: ' .. import)
+        for line in content:gmatch("[^\r\n]+") do
+            -- get the import variable and the location of the file
+            -- local importVar, location = line:match("^%s*import%s+([%w_]+)%s+from%s+['\"]([^'\"]+)['\"]%s*$")
+            local importVar, location = line:match("^%s*import%s+([%w_]+)%s+from%s+['\"]([^'\"]+)['\"].*$")
+
+            -- add a local import candidate if the import isn't making a CDN http request
+            if importVar and location and not string.find(location, 'http') then
+                print('importVar: ' .. importVar)
+                print('location: ' .. location)
+                -- normalize location as it could be './' or '../' or just the name of the file
+                local normalizedLocation = string.gsub(location, './', '')
+                local path = quarto.project.directory ..
+                    '/' .. component_folder .. '/' .. normalizedLocation .. '.' .. extension
+                print('import found: ' .. path)
+                local importContent = read_file_to_string(path, extension)
+                table.insert(imported_content, importContent)
+                -- remove the import from the content
+                modified_content = string.gsub(modified_content, line, '')
+            end
+        end
+    end
+
+    -- Return the concatenated string
+    return table.concat(imported_content, "\n") .. modified_content
+end
+
 
 -- Function to read the contents of a file and store it in a string
-function read_file_to_string(filename)
+function read_file_to_string(filename, extension)
     local file = io.open(filename, "r") -- Open the file in read mode
     if not file then
         print("Error: File not found or unable to open.")
@@ -72,7 +108,8 @@ function read_file_to_string(filename)
 
     local content = file:read("*all") -- Read the entire content of the file
     file:close()                      -- Close the file
-    return content
+
+    return modify_with_imports(content, extension)
 end
 
 -- check if string is empty
