@@ -88,16 +88,15 @@ function UseEffect() {
 }
 ```
 
-The modules are being imported and run in the browser, it is not being bundled. In order to leverage third party packages, make sure it is available as an es6 module [here](https://www.jsdelivr.com/esm) or [here](https://esm.run)
+The modules are being imported and run in the browser, it is not being bundled. In order to leverage third party packages, make sure it is available as an es6 module [here](https://www.jsdelivr.com/esm) or [here](https://esm.run) (or any other es6 module CDN)
 
 Then import it and use accordingly, 
-
 
 ## Adding local imports
 
 We are currently looking at the best way to do this.
 
-## Gothas
+## Gotchas
 
 - Don't include imports of React in your component, Babel will already provide this on the window.
 
