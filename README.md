@@ -58,7 +58,7 @@ or for typescript
 
 `components/MyComponent.tsx`
 
-## Adding imports
+## Adding thirdparty imports
 
 We can use esms and CDNs to deliver imports whilst in the browsers. Here's is an example of using imports with esm.run
 
@@ -92,3 +92,14 @@ The modules are being imported and run in the browser, it is not being bundled. 
 
 Then import it and use accordingly, 
 
+
+## Adding local imports
+
+We are currently looking at the best way to do this.
+
+## Gothas
+
+- Don't include imports of React in your component, Babel will already provide this on the window.
+
+## Known issues
+- arrow functions are not currently supported. The babel plugin `transform-arrow-functions` is conflicting with the babel typescript preset. This is being investigated.
