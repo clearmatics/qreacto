@@ -22,41 +22,65 @@ First create your react component
 
 
 ``` javascript
-function MyComponent() {
-  const [count, setCount] = React.useState(0);
-
-  const handleClick = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-
-  return (
-    <div>
-      <h1>Count: {count}</h1>
-      <button onClick={handleClick}>Increment</button>
-    </div>
-  );
-}
+/**
+ * An example of react with fetch
+ * @returns 
+ */
+function FetchComponent() {
+    const [data, setData] = React.useState([]);
+  
+    // Function to fetch data from the endpoint
+    function fetchData() {
+      fetch(`https://dummyjson.com/products/${data.length + 1}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Update the state with the fetched data
+          setData(previous => [...previous, ...[data]]);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  
+    return (
+      <div>
+        <button onClick={fetchData}>Fetch Data</button>
+        <div>
+          {data ? (
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          ) : (
+            <p>No data fetched yet. Click the button to fetch data.</p>
+          )}
+        </div>
+      </div>
+    );
+  }
 ```
 
 Next add the shortcode into the `.qmd` file you want the component to show in.
 
 ``` bash
-{{< react MyComponent >}}
+{{< react FetchComponent >}}
 ```
 
 If you want to use **typescript**, you can add the following attribute
 
 ``` bash
-{{< react MyComponent type="typescript" >}}
+{{< react FetchComponent type="typescript" >}}
 ```
 
 Dont forget to save your file with the `.tsx` extension
 
-Note that the name of the component and the name of the file must match in order for the filter to pull the component in. So the component should be saved at `components/MyComponent.jsx`
+Note that the name of the component and the name of the file must match in order for the filter to pull the component in. So the component should be saved at `components/FetchComponent.jsx`
 
 or for typescript
 
-`components/MyComponent.tsx`
+`components/FetchComponent.tsx`
 
 ## Adding thirdparty imports
 
