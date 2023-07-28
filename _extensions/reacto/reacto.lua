@@ -1,5 +1,21 @@
 local component_folder = 'components'
 
+local function tryLoadFile(filename)
+    -- List of possible file extensions to try
+    local extensions = { ".jsx", ".tsx" }
+
+    for _, ext in ipairs(extensions) do
+        local fullFilename = filename .. ext
+        local file = io.open(fullFilename, "r")
+        if file then
+            file:close()
+            return fullFilename
+        end
+    end
+
+    return nil -- File not found with any of the extensions
+end
+
 --todo use a debugging flag stored in _quarto.yaml to handle logging
 -- include react dependencies
 local function ensure_react()
@@ -39,21 +55,25 @@ end
 
 -- includes reactDOM.render into the document, with provided component name and element id
 -- inject the component into the script tag
-local function add_react_element(ComponentName, elementId, extension)
+local function add_react_element(ComponentName, elementId)
     print(ComponentName .. " > " .. elementId)
-    local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName .. '.' .. extension
-
+    local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName
+    local foundFile = tryLoadFile(path)
     -- default presets env-plus is needed for imports to work with esms
     -- react is required because... React
-    local presets = 'env-plus,react'
+    local presets = 'env-plus,react,typescript'
 
-    -- check if extension is equal to typescript
-    if extension == 'tsx' then
-        presets = presets .. ',typescript'
+    if not foundFile then
+        error("react: component not found: " .. path)
+    end
+
+    -- check if found file path has tsx in it
+    if string.find(foundFile, 'tsx') then
+        presets = presets .. ''
     end
     quarto.doc.include_text('after-body',
         '<script type="text/babel" data-type="module" data-presets="' .. presets .. '">' ..
-        '' .. read_file_to_string(path, extension) ..
+        '' .. read_file_to_string(foundFile) ..
         'ReactDOM.render(' ..
         ' <React.StrictMode> ' ..
         '   <' .. ComponentName .. '/> ' ..
@@ -87,11 +107,18 @@ local function modify_with_imports(content, extension)
 
                 -- get the path of the file
                 local path = quarto.project.directory ..
-                    '/' .. component_folder .. '/' .. normalizedLocation .. '.' .. extension
+                    '/' .. component_folder .. '/' .. normalizedLocation
+                local foundFile = tryLoadFile(path)
+
+                -- err if file not found
+                if not foundFile then
+                    error("react: local import not found: " .. path)
+                end
+
                 print('local import found: ' .. path)
 
                 -- recursive call to get the content of the import
-                local importContent = read_file_to_string(path, extension)
+                local importContent = read_file_to_string(foundFile)
 
                 -- push results to array (as there might be more then one import to handle)
                 table.insert(imported_content, importContent)
@@ -109,7 +136,7 @@ end
 
 
 -- Function to read the contents of a file and store it in a string
-function read_file_to_string(filename, extension)
+function read_file_to_string(filename)
     local file = io.open(filename, "r") -- Open the file in read mode
     if not file then
         print("Error: File not found or unable to open.")
@@ -119,7 +146,7 @@ function read_file_to_string(filename, extension)
     local content = file:read("*all") -- Read the entire content of the file
     file:close()                      -- Close the file before handling imports (as it can recurse and we -may- end up with multiple open file streams )
 
-    return modify_with_imports(content, extension)
+    return modify_with_imports(content)
 end
 
 -- check if string is empty
@@ -154,16 +181,9 @@ return {
             end
 
             local componentId = 'react-' .. componentname .. '-' .. randomString(8)
-            local componentType = pandoc.utils.stringify(kwargs["type"])
-            local fileType = 'jsx'
-
-            -- check it is not empty and it is a typescript component
-            if not is_empty(componentType) and componentType == 'typescript' then
-                fileType = 'tsx'
-            end
 
             -- Add the React injection
-            add_react_element(componentname, componentId, fileType)
+            add_react_element(componentname, componentId)
 
             -- Create the div element to place the component in
             return pandoc.RawInline(

@@ -172,5 +172,6 @@ Currently, components can only be imported from the same folder, so if you have 
 
 ## Known issues and tasks still to do
 - Arrow functions are not currently supported. The babel plugin `transform-arrow-functions` is conflicting with the babel typescript preset. This is being investigated.
-- Allow deep imports
-- Allow imports of different extensions
+- [ ] Allow deep imports
+- [/] Allow imports of different extensions - typescript is set as default the default preset as it allows javscript to run.
+- [/] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
