@@ -8,4 +8,4 @@ function ButtonExample() {
         <button onClick={handleClick}>Click Me</button>
       </div>
     );
-  }
+  };
