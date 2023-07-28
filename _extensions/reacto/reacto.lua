@@ -28,7 +28,7 @@ local function ensure_babel_transpiler()
     })
 end
 
--- Change babel presets to use imports rather than require (es6)
+-- Change babel presets to use imports rather than require (esm)
 local function ensure_imports_babel_preset()
     quarto.doc.add_html_dependency({
         name = 'babel-presets',
@@ -40,7 +40,7 @@ end
 -- includes reactDOM.render into the document, with provided component name and element id
 -- inject the component into the script tag
 local function add_react_element(ComponentName, elementId, extension)
-    print(ComponentName .. " >>>> " .. elementId)
+    print(ComponentName .. " > " .. elementId)
     local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName .. '.' .. extension
 
     -- default presets env-plus is needed for imports to work with esms
@@ -64,13 +64,17 @@ local function add_react_element(ComponentName, elementId, extension)
     )
 end
 
--- given a component as a string, look for imports
+-- given a component as a string, look for local imports
+-- inject the contents of that local import component
+-- return the content, modified to include the imports
 local function modify_with_imports(content, extension)
-    local import = string.find(content, "import")
     local imported_content = {}
     local modified_content = content
+
+    -- look for import keyword
+    local import = string.find(content, "import")
+
     if import then
-        print('import found: ' .. import)
         for line in content:gmatch("[^\r\n]+") do
             -- get the import variable and the location of the file
             -- local importVar, location = line:match("^%s*import%s+([%w_]+)%s+from%s+['\"]([^'\"]+)['\"]%s*$")
@@ -78,22 +82,28 @@ local function modify_with_imports(content, extension)
 
             -- add a local import candidate if the import isn't making a CDN http request
             if importVar and location and not string.find(location, 'http') then
-                print('importVar: ' .. importVar)
-                print('location: ' .. location)
-                -- normalize location as it could be './' or '../' or just the name of the file
+                -- normalize location as it could be './'
                 local normalizedLocation = string.gsub(location, './', '')
+
+                -- get the path of the file
                 local path = quarto.project.directory ..
                     '/' .. component_folder .. '/' .. normalizedLocation .. '.' .. extension
-                print('import found: ' .. path)
+                print('local import found: ' .. path)
+
+                -- recursive call to get the content of the import
                 local importContent = read_file_to_string(path, extension)
+
+                -- push results to array (as there might be more then one import to handle)
                 table.insert(imported_content, importContent)
-                -- remove the import from the content
+
+                -- remove the import from the content to prevent some browsers trying to fetch local files
                 modified_content = string.gsub(modified_content, line, '')
             end
         end
     end
 
-    -- Return the concatenated string
+    -- concat the array of import content with the modified content (the content without the imports)
+    -- return it
     return table.concat(imported_content, "\n") .. modified_content
 end
 
@@ -107,7 +117,7 @@ function read_file_to_string(filename, extension)
     end
 
     local content = file:read("*all") -- Read the entire content of the file
-    file:close()                      -- Close the file
+    file:close()                      -- Close the file before handling imports (as it can recurse and we -may- end up with multiple open file streams )
 
     return modify_with_imports(content, extension)
 end
@@ -118,6 +128,7 @@ local function is_empty(s)
 end
 
 -- Function to generate a random string of given length
+-- we use this to asign a unique id to the react component and the div to inject the component into
 local function randomString(length)
     local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     local str = ""
@@ -130,7 +141,6 @@ end
 
 return {
     ["react"] = function(args, kwargs)
-        print("React component found")
         if quarto.doc.is_format("html:js") then
             ensure_react()
             ensure_react_dom()
