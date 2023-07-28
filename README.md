@@ -14,8 +14,6 @@ This will setup a project that we can use temporarily to test out functionality.
 
 Components will be searched for in the `components/` folder in the root of the project, there are some basic examples already available.
 
-**Note** Currently only `.jsx` files are supported.
-
 ## Running a React component
 
 First create your react component
