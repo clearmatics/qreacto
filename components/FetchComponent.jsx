@@ -8,7 +8,7 @@ function FetchComponent() {
   
     // Function to fetch data from the endpoint
     function fetchData() {
-      fetch(`https://d3sk8vqz7pzy2a.cloudfront.net/on_chain_totals.json`)
+      fetch(`https://dummyjson.com/products/${data.length + 1}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
