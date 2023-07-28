@@ -116,11 +116,61 @@ Then import it and use accordingly,
 
 ## Adding local imports
 
-We are currently looking at the best way to do this.
+You can import components from the same folder, for example
+
+``` javascript
+import ButtonExample from "./ButtonExample";
+/**
+ * An example of react with fetch
+ * @returns 
+ */
+function FetchComponent() {
+    const [data, setData] = React.useState([]);
+  
+    // Function to fetch data from the endpoint
+    function fetchData() {
+      fetch(`https://d3sk8vqz7pzy2a.cloudfront.net/on_chain_totals.json`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Update the state with the fetched data
+          setData(previous => [...previous, ...[data]]);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  
+    return (
+      <div>
+        <ButtonExample />
+        <button onClick={fetchData}>Fetch Data</button>
+        <div>
+          {data ? (
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          ) : (
+            <p>No data fetched yet. Click the button to fetch data.</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+```
+
+Currently, components can only be imported from the same folder, so if you have a component in a subfolder, you will need to move it to the same folder as the component you are importing it into.
+
+
+**Note** The files should all use the same extension as the component you are importing into. So if you are importing into a `.tsx` file, the files you are importing should also be `.tsx` files.
 
 ## Gotchas
 
 - Don't include imports of React in your component, Babel will already provide this on the window.
 
-## Known issues
-- arrow functions are not currently supported. The babel plugin `transform-arrow-functions` is conflicting with the babel typescript preset. This is being investigated.
+## Known issues and tasks still to do
+- Arrow functions are not currently supported. The babel plugin `transform-arrow-functions` is conflicting with the babel typescript preset. This is being investigated.
+- Allow deep imports
+- Allow imports of different extensions
