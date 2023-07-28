@@ -1,3 +1,4 @@
+import MyComponent from "./MyComponent";
 function ButtonExample() {
     const handleClick = () => {
       alert('Button clicked!');
@@ -6,6 +7,7 @@ function ButtonExample() {
     return (
       <div>
         <button onClick={handleClick}>Click Me</button>
+        <MyComponent />
       </div>
     );
   };

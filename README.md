@@ -175,3 +175,4 @@ Currently, components can only be imported from the same folder, so if you have 
 - [ ] Allow deep imports
 - [/] Allow imports of different extensions - typescript is set as default the default preset as it allows javscript to run.
 - [/] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
+- [ ] Named imports are not currently supported `import { Button } from './Button';` will not work but `import Button from './Button'` will.

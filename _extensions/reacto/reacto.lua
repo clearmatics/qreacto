@@ -129,6 +129,15 @@ local function modify_with_imports(content, extension)
         end
     end
 
+    -- find line with export default and remove the entire line
+    modified_content = string.gsub(modified_content, "export default[^\r\n]*\r?\n?", '')
+
+    -- find line with export and remove it
+    local export = string.find(modified_content, "export")
+    if export then
+        modified_content = string.gsub(modified_content, "export", '')
+    end
+
     -- concat the array of import content with the modified content (the content without the imports)
     -- return it
     return table.concat(imported_content, "\n") .. modified_content
