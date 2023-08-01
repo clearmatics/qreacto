@@ -166,13 +166,21 @@ Currently, components can only be imported from the same folder, so if you have 
 
 **Note** The files should all use the same extension as the component you are importing into. So if you are importing into a `.tsx` file, the files you are importing should also be `.tsx` files.
 
+## use of css
+The css is pulled in automatically provided and put into the html. It does not need to be imported into the react component.
+
 ## Gotchas
 
 - Don't include imports of React in your component, Babel will already provide this on the window.
 
+## Development
+
+To start developing with quarto, you'll need
+
 ## Known issues and tasks still to do
 - Arrow functions are not currently supported. The babel plugin `transform-arrow-functions` is conflicting with the babel typescript preset. This is being investigated.
 - [ ] Allow deep imports
-- [/] Allow imports of different extensions - typescript is set as default the default preset as it allows javscript to run.
-- [/] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
+- [ ] Allow imports of different extensions - typescript is set as default the default preset as it allows javscript to run.
+- [ ] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
 - [ ] Named imports are not currently supported `import { Button } from './Button';` will not work but `import Button from './Button'` will.
+- [ ] Typescript types and type casting not working as expected. for example `as unknown as MyType` will throw

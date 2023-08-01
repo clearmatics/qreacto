@@ -1,12 +1,15 @@
 local component_folder = 'components'
+local resources_folder = 'components'
+local react_component_extensions = { '.jsx', '.tsx' }
+local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true }
 
-local function tryLoadFile(filename)
-    -- List of possible file extensions to try
-    local extensions = { ".jsx", ".tsx" }
 
+-- returns the full file path if it exists
+local function tryLoadFile(filename, extensions)
     for _, ext in ipairs(extensions) do
         local fullFilename = filename .. ext
         local file = io.open(fullFilename, "r")
+        print('trying: ' .. fullFilename)
         if file then
             file:close()
             return fullFilename
@@ -14,6 +17,28 @@ local function tryLoadFile(filename)
     end
 
     return nil -- File not found with any of the extensions
+end
+
+-- given content and a type, add it to the document
+local function raw_add_script(content, type)
+    -- if its js add it to the body
+    if type == '.js' then
+        quarto.doc.include_text('after-body', '<script type="text/javascript">' .. content .. '</script>')
+    end
+
+    -- if its css add it to the head
+    if type == '.css' then
+        quarto.doc.include_text('in-header', '<style>' .. content .. '</style>')
+    end
+
+    -- if its typescript babel transpile it
+    if type == '.ts' then
+        quarto.doc.include_text('after-body',
+            '<script type="text/babel" data-type="module" data-presets="env-plus,typescript">' ..
+            '' .. content ..
+            '</script>'
+        )
+    end
 end
 
 --todo use a debugging flag stored in _quarto.yaml to handle logging
@@ -58,7 +83,8 @@ end
 local function add_react_element(ComponentName, elementId)
     print(ComponentName .. " > " .. elementId)
     local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName
-    local foundFile = tryLoadFile(path)
+
+    local foundFile = tryLoadFile(path, react_component_extensions)
     -- default presets env-plus is needed for imports to work with esms
     -- react is required because... React
     local presets = 'env-plus,react,typescript'
@@ -67,10 +93,6 @@ local function add_react_element(ComponentName, elementId)
         error("react: component not found: " .. path)
     end
 
-    -- check if found file path has tsx in it
-    if string.find(foundFile, 'tsx') then
-        presets = presets .. ''
-    end
     quarto.doc.include_text('after-body',
         '<script type="text/babel" data-type="module" data-presets="' .. presets .. '">' ..
         '' .. read_file_to_string(foundFile) ..
@@ -82,6 +104,36 @@ local function add_react_element(ComponentName, elementId)
         ');' ..
         '</script>'
     )
+end
+
+
+-- Function to find files with specific extensions in a directory
+local function find_files(directory, extensions)
+    local files = {}
+    local command
+
+    -- Use platform-specific commands to list files in the directory
+    if package.config:sub(1, 1) == '\\' then -- Windows
+        command = 'dir /b "' .. directory .. '"'
+    else                                     -- Unix-like systems (Linux, macOS, etc.)
+        command = 'ls "' .. directory .. '"'
+    end
+
+    local handle = io.popen(command)
+
+    if handle then
+        local output = handle:read("*a")
+        handle:close()
+
+        for file in output:gmatch("[^\r\n]+") do
+            local ext = file:match("^.+(%..+)$")
+            if ext and extensions[ext:lower()] then
+                print('supporting file > ' .. file)
+                table.insert(files, { file, ext })
+            end
+        end
+    end
+    return files
 end
 
 -- given a component as a string, look for local imports
@@ -108,7 +160,7 @@ local function modify_with_imports(content, extension)
                 -- get the path of the file
                 local path = quarto.project.directory ..
                     '/' .. component_folder .. '/' .. normalizedLocation
-                local foundFile = tryLoadFile(path)
+                local foundFile = tryLoadFile(path, react_component_extensions)
 
                 -- err if file not found
                 if not foundFile then
@@ -175,6 +227,23 @@ local function randomString(length)
     return str
 end
 
+-- add js/css files to the document
+local function inject_supporting_resources()
+    --look through the components folder for supporting files
+    local path = quarto.project.directory .. '/' .. resources_folder
+
+    -- find files that have the supporting extensions
+    local files = find_files(path, supporting_extensions)
+
+    -- add each file to the document using raw_load_file
+    for _, file in ipairs(files) do
+        local filename = file[1]
+        local extension = file[2]
+        local content = read_file_to_string(path .. '/' .. filename)
+        raw_add_script(content, extension)
+    end
+end
+
 return {
     ["react"] = function(args, kwargs)
         if quarto.doc.is_format("html:js") then
@@ -182,7 +251,7 @@ return {
             ensure_react_dom()
             ensure_babel_transpiler()
             ensure_imports_babel_preset()
-
+            inject_supporting_resources()
             local componentname = pandoc.utils.stringify(args[1])
 
             if is_empty(componentname) then
