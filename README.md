@@ -13,7 +13,7 @@ quarto add clearmatics/qreacto
 To develop the extension, you need to run it in a Quarto project. The quickest way to set up a project is by running the following command in the root directory:
 
 ``` bash
-quarto create-project
+quarto create project
 ```
 
 This command will set up a project that allows you to test the functionality.
