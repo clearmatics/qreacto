@@ -9,7 +9,7 @@ local function tryLoadFile(filename, extensions)
     for _, ext in ipairs(extensions) do
         local fullFilename = filename .. ext
         local file = io.open(fullFilename, "r")
-        print('trying: ' .. fullFilename)
+        print('trying (case-sensitive): ' .. fullFilename)
         if file then
             file:close()
             return fullFilename
