@@ -1,28 +1,19 @@
 # React components in Quarto
 
-Run standalone React components in Quarto projects.
+Run standalone React components in your Quarto project!
 
 ## Installation
 
 To install this extension in your current directory (or into the Quarto project that you're currently working in), use the following command:
 
-quarto add clearmatics/qreacto
-
-## Getting started with development
-
-To develop the extension, you need to run it in a Quarto project. The quickest way to set up a project is by running the following command in the root directory:
-
 ``` bash
-quarto create project
+quarto add clearmatics/qreacto
 ```
-
-This command will set up a project that allows you to test the functionality.
-
-React components are expected to be located in the components/ folder at the root of the project. Some basic examples are already provided.
 
 ## Running a React component
 
-To run a React component, first, create your component in a .jsx or .tsx file. For example:
+To run a React component, first, create a folder called `components/` in the root of the project.
+Then create your component in a .jsx or .tsx file. For example:
 
 
 ``` javascript
@@ -50,7 +41,7 @@ However, you can also be explicit:
 {{< react FetchComponent type="typescript" >}}
 ```
 
-Ensure that the name of the component and the name of the file match for the filter to work correctly. 
+Ensure that the name of the component and the name of the file match for the filter to work correctly. **It is also case sensitive.**
 
 For example, if the component is named `FetchComponent`, save it in the file `components/FetchComponent.jsx` for JavaScript or `components/FetchComponent.tsx` for TypeScript.
 
@@ -96,8 +87,8 @@ You can modify the `reacto.lua` script to change where it looks for resources:
 ``` lua
 local component_folder = 'components' -- This is where the script looks for react components
 local resources_folder = 'components' -- This is where the script looks for supporting files 
-local react_component_extensions = { '.jsx', '.tsx' } -- This is the accepted react extensions
-local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true } -- this is the accepted supporting extensions.
+local react_component_extensions = { '.jsx', '.tsx' } -- These are the accepted react extensions
+local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true } -- These are the accepted supporting extensions.
 ```
 
 ## Gotchas
@@ -106,11 +97,27 @@ local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true 
 
 
 ## Known issues and tasks still to do
-- Arrow functions are not currently supported. The Babel plugin `transform-arrow-functions` conflicts with the Babel TypeScript preset. This is currently being investigated.
+- [ ] Arrow functions are not currently supported. The Babel plugin `transform-arrow-functions` conflicts with the Babel TypeScript preset. This is currently being investigated.
 - [ ] Allow deep imports
 - [x] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
-- [ ] Named imports are not currently supported `import { Button } from './Button';` will not work but `import Button from './Button'` will.
+- [ ] Named imports are not currently supported `import { NamedButton } from './Button';` will not work but `import Button from './Button'` will.
 - [ ] Typescript types and type casting not working as expected. for example `as unknown as MyType` will throw
+
+## Getting started with development
+
+If you would like to contribute, there's a [readme](_extension/qreacto/README.md) in the `_extension/qreacto` folder that explains the codeflow for the qreacto.lua script, its a great place to start.
+
+To develop the extension, you need to run it in a Quarto project. The quickest way to set up a project is by running the following command in the root directory:
+
+``` bash
+quarto create project
+```
+
+This command will set up a project that allows you to test the functionality.
+
+React components are to be located in the components/ folder at the root of the project. Some basic examples are already provided.
+
+The script `qreacto.lua` is the main script that is run when the shortcode is encountered. It is located in the `_extension/qreacto` folder.
 
 ## Contributing
 We welcome contributions from the community to help improve and enhance this project. Whether you want to report a bug, suggest a new feature, or submit code changes, your efforts are highly appreciated.
