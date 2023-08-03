@@ -122,15 +122,7 @@ If you encounter any bugs, glitches, or unexpected behaviour while using this pr
 If you have ideas for new features or improvements, feel free to create an enhancement request in the GitHub repository. We value creative ideas that can add value to the project and its users.
 
 ## Code Contributions
-We encourage contributions from developers of all skill levels. If you want to contribute code changes, please follow these steps:
-
-1. Fork the repository and create a new branch for your changes.
-2. Make your changes and ensure they are well-tested and adhere to the project's coding standards.
-3. Commit your changes with clear and concise commit messages.
-4. Push your branch to your forked repository.
-5. Open a pull request (PR) to the main repository and describe the changes you made.
-6. The PR will be reviewed, and any necessary feedback will be provided. We may suggest improvements or ask for clarifications.
-7. Once your contribution meets the project's requirements, it will be merged into the main branch, and your name will be added to the list of contributors.
+We encourage contributions from developers of all skill levels. If you want to contribute code changes, please follow our [Contributing](CONTRIBUTING.md) guidelines.
 
 ## Code of Conduct
 Please note that we adhere to a Code of Conduct in this project. All contributors are expected to follow these guidelines to ensure a friendly, inclusive, and respectful environment for everyone.
