@@ -2,7 +2,13 @@
 
 Run standalone React components in Quarto projects.
 
-## Getting started
+## Installation
+
+To install this extension in your current directory (or into the Quarto project that you're currently working in), use the following command:
+
+quarto add clearmatics/qreacto
+
+## Getting started with development
 
 To develop the extension, you need to run it in a Quarto project. The quickest way to set up a project is by running the following command in the root directory:
 
