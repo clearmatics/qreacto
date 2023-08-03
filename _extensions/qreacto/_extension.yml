@@ -4,4 +4,4 @@ version: 0.0.2
 quarto-required: ">=1.2.280"
 contributes:
   shortcodes:    
-    - reacto.lua
+    - qreacto.lua
