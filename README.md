@@ -1,176 +1,97 @@
 # React components in Quarto
 
-Run standalone React components
+Run standalone React components in Quarto projects.
 
-## Getting started
+## Installation
 
-For the purposes of development, the extension needs to be run in a quarto project, the quickest way to do this is to run the following in the root directory
+To install this extension in your current directory (or into the Quarto project that you're currently working in), use the following command:
+
+quarto add clearmatics/qreacto
+
+## Getting started with development
+
+To develop the extension, you need to run it in a Quarto project. The quickest way to set up a project is by running the following command in the root directory:
 
 ``` bash
 quarto create-project
 ```
 
-This will setup a project that we can use temporarily to test out functionality.
+This command will set up a project that allows you to test the functionality.
 
-Components will be searched for in the `components/` folder in the root of the project, there are some basic examples already available.
+React components are expected to be located in the components/ folder at the root of the project. Some basic examples are already provided.
 
 ## Running a React component
 
-First create your react component
+To run a React component, first, create your component in a .jsx or .tsx file. For example:
 
 
 ``` javascript
 /**
- * An example of react with fetch
+ * An example of React with fetch
  * @returns 
  */
 function FetchComponent() {
-    const [data, setData] = React.useState([]);
-  
-    // Function to fetch data from the endpoint
-    function fetchData() {
-      fetch(`https://dummyjson.com/products/${data.length + 1}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Update the state with the fetched data
-          setData(previous => [...previous, ...[data]]);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
-  
-    return (
-      <div>
-        <button onClick={fetchData}>Fetch Data</button>
-        <div>
-          {data ? (
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          ) : (
-            <p>No data fetched yet. Click the button to fetch data.</p>
-          )}
-        </div>
-      </div>
-    );
-  }
+    // ...
+}
+
 ```
 
-Next add the shortcode into the `.qmd` file you want the component to show in.
+Next, add the shortcode into the .qmd file where you want the component to be displayed:
 
 ``` bash
 {{< react FetchComponent >}}
 ```
 
-You can use typescript and the extension will automatically detect the file type and use the correct babel preset. Or you can be explicit:
+If you are using TypeScript, the extension will automatically detect the file type and use the correct Babel preset. 
+
+However, you can also be explicit:
 
 ``` bash
 {{< react FetchComponent type="typescript" >}}
 ```
 
-Note that the name of the component and the name of the file must match in order for the filter to pull the component in. So the component should be saved at `components/FetchComponent.jsx`
+Ensure that the name of the component and the name of the file match for the filter to work correctly. 
 
-or for typescript
-
-`components/FetchComponent.tsx`
+For example, if the component is named `FetchComponent`, save it in the file `components/FetchComponent.jsx` for JavaScript or `components/FetchComponent.tsx` for TypeScript.
 
 ## Adding thirdparty imports
 
-We can use esms and CDNs to deliver imports whilst in the browsers. Here's is an example of using imports with esm.run
+You can leverage ES modules and Content Delivery Networks (CDNs) to import third-party packages directly into your Quarto project, without the need for local installations or bundling. CDNs offer several benefits for importing dependencies.
 
-```
+``` javascript
 import * as math from 'https://esm.run/math';
-		
 
-function UseEffect() {
-  const [count, setCount] = React.useState(0);
-
-  const a = 5;
-  const b = 10;
-
-  // Using the 'add' function from the Math module
-  const sum = math.default.add(a, b);
-  const handleClick = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-
-  return (
-    <div>
-      <h1>Count: {count}</h1>
-      <button onClick={handleClick}>Increment</button>
-      <p>Math Sum {sum}</p>
-    </div>
-  );
+function MyComponent() {
+    // ... 
 }
+
 ```
 
-The modules are being imported and run in the browser, it is not being bundled. In order to leverage third party packages, make sure it is available as an es6 module [here](https://www.jsdelivr.com/esm) or [here](https://esm.run) (or any other es6 module CDN)
-
-Then import it and use accordingly, 
+Make sure the third-party package is available as an ES6 module, either from jsdelivr or esm.run (or any other ES6 module CDN). Import and use the package accordingly.
 
 ## Adding local imports
 
-You can import components from the same folder, for example
+You can also import components from the same folder:
 
 ``` javascript
 import ButtonExample from "./ButtonExample";
-/**
- * An example of react with fetch
- * @returns 
- */
+
 function FetchComponent() {
-    const [data, setData] = React.useState([]);
-  
-    // Function to fetch data from the endpoint
-    function fetchData() {
-      fetch(`https://d3sk8vqz7pzy2a.cloudfront.net/on_chain_totals.json`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Update the state with the fetched data
-          setData(previous => [...previous, ...[data]]);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
-  
-    return (
-      <div>
-        <ButtonExample />
-        <button onClick={fetchData}>Fetch Data</button>
-        <div>
-          {data ? (
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          ) : (
-            <p>No data fetched yet. Click the button to fetch data.</p>
-          )}
-        </div>
-      </div>
-    );
-  }
+    // ... 
+}
 ```
 
-Currently, components can only be imported from the same folder, so if you have a component in a subfolder, you will need to move it to the same folder as the component you are importing it into.
+Currently, components can only be imported from the same folder. If you have a component in a subfolder, you will need to move it to the same folder as the component you are importing it into.
 
-
-**Note** The files should all use the same extension as the component you are importing into. So if you are importing into a `.tsx` file, the files you are importing should also be `.tsx` files.
+**Note:** The files should use the same extension as the component you are importing into. For instance, if you are importing into a `.tsx` file, the files you are importing should also be `.tsx` files.
 
 ## Supporting files and scripts
 
-js/css files are automatically included in the page, so if you have a component that requires a css file, you can include it in the same folder as the component and it will be included in the page.
+JavaScript and CSS files are automatically included in the page. If your component requires a CSS file, include it in the same folder as the component, and it will be included in the page.
 
-Supported files are currently being pulled in from the components folder. The supported extensions include css, js and ts.
+Supported files are currently pulled from the `components` folder. The accepted extensions include `.css`, `.js`, and `.ts`.
 
-You can modify the `reacto.lua` script to change where it looks for resources
+You can modify the `reacto.lua` script to change where it looks for resources:
 
 ``` lua
 local component_folder = 'components' -- This is where the script looks for react components
@@ -181,12 +102,42 @@ local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true 
 
 ## Gotchas
 
-- Don't include imports of React in your component, Babel will already provide this on the window.
+- Avoid including imports of React in your component, as Babel will already provide this on the window.
 
 
 ## Known issues and tasks still to do
-- Arrow functions are not currently supported. The babel plugin `transform-arrow-functions` is conflicting with the babel typescript preset. This is being investigated.
+- Arrow functions are not currently supported. The Babel plugin `transform-arrow-functions` conflicts with the Babel TypeScript preset. This is currently being investigated.
 - [ ] Allow deep imports
-- [ ] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
+- [x] infer the file type (and then set the preset) during the lua filter rather than having to specify it in the shortcode (eg don't need to specify `type="typescript"` in the shortcode)
 - [ ] Named imports are not currently supported `import { Button } from './Button';` will not work but `import Button from './Button'` will.
 - [ ] Typescript types and type casting not working as expected. for example `as unknown as MyType` will throw
+
+## Contributing
+We welcome contributions from the community to help improve and enhance this project. Whether you want to report a bug, suggest a new feature, or submit code changes, your efforts are highly appreciated.
+
+## Reporting Issues
+If you encounter any bugs, glitches, or unexpected behaviour while using this project, please open an issue on the GitHub repository. When reporting issues, please provide as much information as possible, including the steps to reproduce the problem and details about your environment.
+
+## Suggesting Enhancements
+If you have ideas for new features or improvements, feel free to create an enhancement request in the GitHub repository. We value creative ideas that can add value to the project and its users.
+
+## Code Contributions
+We encourage contributions from developers of all skill levels. If you want to contribute code changes, please follow these steps:
+
+1. Fork the repository and create a new branch for your changes.
+2. Make your changes and ensure they are well-tested and adhere to the project's coding standards.
+3. Commit your changes with clear and concise commit messages.
+4. Push your branch to your forked repository.
+5. Open a pull request (PR) to the main repository and describe the changes you made.
+6. The PR will be reviewed, and any necessary feedback will be provided. We may suggest improvements or ask for clarifications.
+7. Once your contribution meets the project's requirements, it will be merged into the main branch, and your name will be added to the list of contributors.
+
+## Code of Conduct
+Please note that we adhere to a Code of Conduct in this project. All contributors are expected to follow these guidelines to ensure a friendly, inclusive, and respectful environment for everyone.
+
+By contributing to this project, you agree to abide by the Code of Conduct, which can be found in the repository's [Code of Conduct](CODE_OF_CONDUCT.md) file.
+
+## Getting Help
+If you need help or have questions about contributing, feel free to reach out to us by creating an issue or joining our community channels. We are more than happy to assist you throughout the process.
+
+Thank you for your interest in contributing to this project! Your contributions play a vital role in making this project better for the community. We look forward to your involvement and collaboration. Happy contributing!
