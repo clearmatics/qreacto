@@ -52,7 +52,7 @@ For example, if the component is named `FetchComponent`, save it in the file `co
 
 You can leverage ES modules and Content Delivery Networks (CDNs) to import third-party packages directly into your Quarto project, without the need for local installations or bundling. CDNs offer several benefits for importing dependencies.
 
-```
+``` javascript
 import * as math from 'https://esm.run/math';
 
 function MyComponent() {
