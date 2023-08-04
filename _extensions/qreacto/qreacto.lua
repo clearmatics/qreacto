@@ -1,47 +1,15 @@
-local component_folder = 'components'
-local resources_folder = 'components'
+local component_folder = '_components'
+local resources_folder = '_components'
 local react_component_extensions = { '.jsx', '.tsx', '.js', '.ts' }
-local supported_styles = { ['.css'] = true }
-local imported_supported_files = {}
+local styles_to_import = {}
 
--- returns the full file path if it exists
-local function tryLoadFile(filename, extensions)
-    for _, ext in ipairs(extensions) do
-        local fullFilename = filename .. ext
-        local file = io.open(fullFilename, "r")
-        print('trying (case-sensitive): ' .. fullFilename)
-        if file then
-            file:close()
-            return fullFilename
-        end
-    end
+--[[
+ ============================================================================
+ Add react dependencies:
+ react, babel, transpiler and react-dom
+============================================================================
+]]
 
-    return nil -- File not found with any of the extensions
-end
-
--- given content and a type, add it to the document
-local function raw_add_script(content, type)
-    -- if its js add it to the body
-    if type == '.js' then
-        quarto.doc.include_text('after-body', '<script type="text/javascript">' .. content .. '</script>')
-    end
-
-    -- if its css add it to the head
-    if type == '.css' then
-        quarto.doc.include_text('in-header', '<style>' .. content .. '</style>')
-    end
-
-    -- if its typescript babel transpile it
-    if type == '.ts' then
-        quarto.doc.include_text('after-body',
-            '<script type="text/babel" data-type="module" data-presets="env-plus,typescript">' ..
-            '' .. content ..
-            '</script>'
-        )
-    end
-end
-
---todo use a debugging flag stored in _quarto.yaml to handle logging
 -- include react dependencies
 local function ensure_react()
     quarto.doc.add_html_dependency({
@@ -78,76 +46,89 @@ local function ensure_imports_babel_preset()
     })
 end
 
+--[[
+============================================================================
+ Helper functions:
+ Handle loading of files, reading of files, and injecting of scripts
+============================================================================
+]]
 
--- Function to find files with specific extensions in a directory
-local function find_files(directory, extensions)
-    local files = {}
-    local command
-
-    -- Use platform-specific commands to list files in the directory
-    if package.config:sub(1, 1) == '\\' then -- Windows
-        command = 'dir /b "' .. directory .. '"'
-    else                                     -- Unix-like systems (Linux, macOS, etc.)
-        command = 'ls "' .. directory .. '"'
+-- Function to generate a random string of given length
+-- we use this to asign a unique id to the react component and the div to inject the component into
+local function randomString(length)
+    local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    local str = ""
+    for i = 1, length do
+        local randomIndex = math.random(1, #chars)
+        str = str .. string.sub(chars, randomIndex, randomIndex)
     end
+    return str
+end
 
-    local handle = io.popen(command)
+-- check if string is empty
+local function is_empty(s)
+    return s == nil or s == ''
+end
 
-    if handle then
-        local output = handle:read("*a")
-        handle:close()
-
-        for file in output:gmatch("[^\r\n]+") do
-            local ext = file:match("^.+(%..+)$")
-            if ext and extensions[ext:lower()] then
-                print('supporting file > ' .. file)
-                table.insert(files, { file, ext })
-            end
+-- returns the full file path if it exists
+local function tryLoadFile(filename, extensions)
+    for _, ext in ipairs(extensions) do
+        local fullFilename = filename .. ext
+        local file = io.open(fullFilename, "r")
+        print('trying (case-sensitive): ' .. fullFilename)
+        if file then
+            file:close()
+            return fullFilename
         end
     end
-    return files
+
+    return nil -- File not found with any of the extensions
 end
 
-
--- includes reactDOM.render into the document, with provided component name and element id
--- inject the component into the script tag
-local function add_react_element(ComponentName, elementId)
-    print(ComponentName .. " > " .. elementId)
-    local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName
-
-    local foundFile = tryLoadFile(path, react_component_extensions)
-    -- default presets env-plus is needed for imports to work with esms
-    -- react is required because... React
-    local presets = 'env-plus,react,typescript'
-
-    if not foundFile then
-        error("react: component not found: " .. path)
+-- given content and a type, add it to the document
+local function include_text_in_document(content, type)
+    -- if its js add it to the body
+    if type == '.js' then
+        quarto.doc.include_text('after-body', '<script type="text/javascript">' .. content .. '</script>')
     end
 
-    quarto.doc.include_text('after-body',
-        '<script type="text/babel" data-type="module" data-presets="' .. presets .. '">' ..
-        '' .. read_file_to_string(foundFile) ..
-        'ReactDOM.render(' ..
-        ' <React.StrictMode> ' ..
-        '   <' .. ComponentName .. '/> ' ..
-        ' </React.StrictMode>, ' ..
-        ' document.getElementById("' .. elementId .. '") ' ..
-        ');' ..
-        '</script>'
-    )
-end
-
--- Function to check if a table contains a specific element
-local function contains(table, element)
-    for _, value in ipairs(table) do
-        if value == element then
-            return true
-        end
+    -- if its css add it to the head
+    if type == '.css' then
+        quarto.doc.include_text('in-header', '<style>' .. content .. '</style>')
     end
-    return false
+
+    -- if its typescript babel transpile it
+    if type == '.ts' then
+        quarto.doc.include_text('after-body',
+            '<script type="text/babel" data-type="module" data-presets="env-plus,typescript">' ..
+            '' .. content ..
+            '</script>'
+        )
+    end
 end
 
--- given a component as a string, look for local imports
+-- Read the contents of a file and return it as a string
+function read_file_to_string(filename)
+    local file = io.open(filename, "r") -- Open the file in read mode
+    if not file then
+        print("Error: File not found or unable to open.")
+        return nil
+    end
+
+    local content = file:read("*all") -- Read the entire content of the file
+    file:close()                      -- Close the file before handling imports (as it can recurse and we -may- end up with multiple open file streams )
+    return content
+end
+
+--[[
+============================================================================
+ Content manipulation and react component injection:
+ Handle imports, exports, injecting nested dependencies, stylesheets
+ and injecting the component
+============================================================================
+]]
+
+-- look for local imports
 -- inject the contents of that local import component (js, ts, jsx or tsx)
 -- return the content, modified to include the imports
 local function modify_with_imports(content)
@@ -159,6 +140,22 @@ local function modify_with_imports(content)
 
     if import then
         for line in content:gmatch("[^\r\n]+") do
+            -- check for css imports
+            local csslocation = line:match("^%s*import%s+['\"]([^'\"]+%.css)['\"].*$")
+            if csslocation then
+                -- normalize location as it could be './'
+                local normalizedCssLocation = string.gsub(csslocation, './', '')
+
+                -- get the path of the file
+                local cssPath = quarto.project.directory .. '/' .. resources_folder .. '/' .. normalizedCssLocation
+
+                print('local stylesheet found: ' .. cssPath)
+                -- add the css file to the list of styles to import
+                table.insert(styles_to_import, csslocation)
+                -- remove the import from the content to prevent some browsers trying to fetch local files
+                modified_content = string.gsub(modified_content, line, '')
+            end
+
             -- get the import variable and the location of the file
             local importVar, location = line:match("^%s*import%s+([%w_]+)%s+from%s+['\"]([^'\"]+)['\"].*$")
 
@@ -170,15 +167,17 @@ local function modify_with_imports(content)
                 -- get the path of the file
                 local path = quarto.project.directory .. '/' .. component_folder .. '/' .. normalizedLocation
 
+                -- check if the location is a css file by checking if the last part of the import is ".css"
+
                 -- check for nested react components
                 local scriptFile = tryLoadFile(path, react_component_extensions)
-                print(contains(imported_supported_files, path))
+
                 -- only import if jsx or tsx file exists
                 if scriptFile then
                     print('local import found: ' .. path)
 
                     -- recursive call to get the content of the import
-                    local importContent = read_file_to_string(scriptFile)
+                    local importContent = modify_with_imports(read_file_to_string(scriptFile))
 
                     -- push results to array (as there might be more then one import to handle)
                     table.insert(imported_content, importContent)
@@ -206,56 +205,51 @@ local function modify_with_imports(content)
     return table.concat(imported_content, "\n") .. modified_content
 end
 
+-- includes reactDOM.render into the document, with provided component name and element id
+-- inject the component into the script tag
+local function add_react_element(ComponentName, elementId)
+    print(ComponentName .. " > " .. elementId)
+    local path = quarto.project.directory .. '/' .. component_folder .. '/' .. ComponentName
 
--- Function to read the contents of a file and store it in a string
-function read_file_to_string(filename)
-    local file = io.open(filename, "r") -- Open the file in read mode
-    if not file then
-        print("Error: File not found or unable to open.")
-        return nil
+    local foundFile = tryLoadFile(path, react_component_extensions)
+    -- default presets env-plus is needed for imports to work with esms
+    -- react is required because... React
+    local presets = 'env-plus,react,typescript'
+
+    if not foundFile then
+        error("react: component not found: " .. path)
     end
-
-    local content = file:read("*all") -- Read the entire content of the file
-    file:close()                      -- Close the file before handling imports (as it can recurse and we -may- end up with multiple open file streams )
-
-    return modify_with_imports(content)
+    local content = read_file_to_string(foundFile)
+    quarto.doc.include_text('after-body',
+        '<script type="text/babel" data-type="module" data-presets="' .. presets .. '">' ..
+        '' .. modify_with_imports(content) ..
+        'ReactDOM.render(' ..
+        ' <React.StrictMode> ' ..
+        '   <' .. ComponentName .. '/> ' ..
+        ' </React.StrictMode>, ' ..
+        ' document.getElementById("' .. elementId .. '") ' ..
+        ');' ..
+        '</script>'
+    )
 end
 
--- check if string is empty
-local function is_empty(s)
-    return s == nil or s == ''
-end
-
--- Function to generate a random string of given length
--- we use this to asign a unique id to the react component and the div to inject the component into
-local function randomString(length)
-    local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    local str = ""
-    for i = 1, length do
-        local randomIndex = math.random(1, #chars)
-        str = str .. string.sub(chars, randomIndex, randomIndex)
-    end
-    return str
-end
-
--- add js/css files to the document
-local function inject_supporting_resources()
-    --look through the components folder for supporting files
+-- add css files to the document
+local function inject_imported_stylesheets()
     local path = quarto.project.directory .. '/' .. resources_folder
 
-    -- find files that have the supporting extensions
-    local files = find_files(path, supported_styles)
-
-    -- add each file to the document using raw_load_file
-    for _, file in ipairs(files) do
-        local filename = file[1]
-        local extension = file[2]
+    -- loop over the styles_to_import array
+    for _, filename in ipairs(styles_to_import) do
+        print('injecting stylesheet: ' .. filename)
         local content = read_file_to_string(path .. '/' .. filename)
-        raw_add_script(content, extension)
-        table.insert(imported_supported_files, path .. '/' .. filename)
+        return include_text_in_document(content, '.css')
     end
 end
 
+--[[
+============================================================================
+Script entry point
+============================================================================
+]]
 return {
     ["react"] = function(args, kwargs)
         if quarto.doc.is_format("html:js") then
@@ -266,7 +260,7 @@ return {
             ensure_imports_babel_preset()
 
             -- add local style sheets
-            inject_supporting_resources()
+
 
 
             local componentname = pandoc.utils.stringify(args[1])
@@ -278,6 +272,9 @@ return {
 
             -- Add the React injection
             add_react_element(componentname, componentId)
+
+            -- A list of css files to import will have been created when the component was injected
+            inject_imported_stylesheets()
 
             -- Create the div element to place the component in
             return pandoc.RawInline(
