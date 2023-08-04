@@ -142,7 +142,7 @@ and see the results:
 {{< react MyNestedComponent >}}
 
 
-## Tips & tricks
+## Gotchas
 
 - Dont import react in your file `import React from 'react'` 
 - components should be placed in the `_components/` folder
