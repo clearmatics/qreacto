@@ -9,22 +9,18 @@ function List({ product }) {
     return (
       <div className='item'>
         <h2>{product.title}</h2>
-        <p>Description: {product.description}</p>
+        <p>{product.description}</p>
         <p>Price: ${product.price}</p>
         <p>Discount Percentage: {product.discountPercentage}%</p>
         <p>Rating: {product.rating}</p>
         <p>Stock: {product.stock}</p>
         <p>Brand: {product.brand}</p>
-        <p>Category: {product.category}</p>
-        <img src={product.thumbnail} alt={product.title} />
-        <h3>Images:</h3>
-        <ul>
-          {product.images.map((image, index) => (
-            <li key={index}>
-              <img src={image} alt={`Image ${index + 1}`} />
-            </li>
+        <p>Category: {product.category}</p>        
+        <div className='images' >
+          {product.images.map((image, index) => (            
+              <img key={index} src={image} alt={`Image ${index + 1}`} />            
           ))}
-        </ul>
+          </div>
       </div>
     );
   }
