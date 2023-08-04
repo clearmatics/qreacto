@@ -7,17 +7,15 @@ import List from "./List";
  */
 function Products() {
     const [data, setData] = React.useState([]);
-
+    React.useEffect(() => {      
+      fetchData().then((data) => setData(data));
+    }, [])
+    
     return (
       <div>
-        <List />
-        <button onClick={fetchData}>Fetch Data</button>
+        <h1>Products</h1>
         <div>
-          {data ? (
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          ) : (
-            <p>No data fetched yet. Click the button to fetch data.</p>
-          )}
+          {data.products && data.products.length > 0 && (data.products.map((product) => <List key={product.id} product={product} />))}
         </div>
       </div>
     );
