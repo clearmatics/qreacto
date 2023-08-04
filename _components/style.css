@@ -1,33 +1,13 @@
-.wrapper {
+.wrapper-for-other-component {
+    border: 1px solid tomato;
+    border-radius: 6px;
+    padding: 80px;
+    cursor: pointer;
+}
+
+.styled-component-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 400px;
-}
-
-.item {
-    background-color: #fff;
-    border: 1px solid #080808;
-    text-align: center;
-    line-height: 200px;
-    font-size: 30px;
-    font-weight: bold;
-    padding: 20px;
-}
-
-.images {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 800px;
-    margin: 0 auto;
     gap: 12px;
-
-    >img {
-        max-width: 260px;
-    }
-
-    p {
-        font-size: 12px;
-    }
 }
