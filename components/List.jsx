@@ -3,9 +3,7 @@
  * @param {Object} product - The product object with the specified structure.
  * @returns {JSX.Element} - The rendered JSX for the product details.
  */
-function List({ product }) {
-    console.log({product})
-
+function List({ product }) {    
     if(!product) return null
     return (
       <div>

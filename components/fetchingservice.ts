@@ -1,12 +1,10 @@
 /**
  * Basic fetch service example
+ * Notice how this file is a typescript file, but the rest of the project is javascript
  */
-function fetchData() {
-  console.log(2)
-    return fetch(`https://dummyjson.com/products/`)
+function fetchData() {  
+    return fetch(`https://dummyjson.com/products`)
       .then(response => {
-        
-        console.log('got response', response)
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

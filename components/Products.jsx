@@ -1,6 +1,7 @@
 
 import fetchData from "./fetchingservice";
 import List from "./List";
+
 /**
  * An example of react component with a fetch service imported
  * @returns 

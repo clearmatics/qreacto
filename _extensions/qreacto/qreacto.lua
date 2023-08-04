@@ -1,7 +1,6 @@
 local component_folder = 'components'
 local resources_folder = 'components'
-local react_component_extensions = { '.jsx', '.tsx', '.js', '.tsx' }
-local supporting_scripts = { ['.js'] = true, ['.ts'] = true }
+local react_component_extensions = { '.jsx', '.tsx', '.js', '.ts' }
 local supported_styles = { ['.css'] = true }
 local imported_supported_files = {}
 
@@ -161,7 +160,6 @@ local function modify_with_imports(content)
     if import then
         for line in content:gmatch("[^\r\n]+") do
             -- get the import variable and the location of the file
-            -- local importVar, location = line:match("^%s*import%s+([%w_]+)%s+from%s+['\"]([^'\"]+)['\"]%s*$")
             local importVar, location = line:match("^%s*import%s+([%w_]+)%s+from%s+['\"]([^'\"]+)['\"].*$")
 
             -- add a local import candidate if the import isn't making a CDN http request
