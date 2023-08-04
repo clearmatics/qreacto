@@ -150,6 +150,5 @@ and see the results:
 - Changes to your component will not refresh quarto, `quarto preview` or `quarto render` will need to be called.
 - Typescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect 
 - Named imports are not currently supported `import { NamedButton } from './Button';` will not work but `import Button from './Button'` will.
-- Arrow functions are not currently supported. The Babel plugin `transform-arrow-functions` conflicts with the Babel TypeScript preset. This is currently being investigated.
 - Deep imports are not currently supported. components should be placed in the `_components/` folder.
 - Works with `md` and `qmd` other extensions might work but have not been tested.
