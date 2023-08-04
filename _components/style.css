@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.item {
+    width: 200px;
+    height: 130px;
+    margin: 10px;
+    background-color: #ccc;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 200px;
+    font-size: 30px;
+    font-weight: bold;
+}

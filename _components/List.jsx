@@ -1,3 +1,4 @@
+import './style.css';
 /**
  * An example of react with fetch
  * @param {Object} product - The product object with the specified structure.
@@ -6,7 +7,7 @@
 function List({ product }) {    
     if(!product) return null
     return (
-      <div>
+      <div className='item'>
         <h2>{product.title}</h2>
         <p>Description: {product.description}</p>
         <p>Price: ${product.price}</p>
