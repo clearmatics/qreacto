@@ -1,7 +1,9 @@
+Styles_to_import = {}
+
 local component_folder = '_components'
 local resources_folder = '_components'
 local react_component_extensions = { '.jsx', '.tsx', '.js', '.ts' }
-local styles_to_import = {}
+
 
 --[[
  ============================================================================
@@ -52,6 +54,16 @@ end
  Handle loading of files, reading of files, and injecting of scripts
 ============================================================================
 ]]
+
+-- Function to check if a table contains a specific element
+local function contains(table, element)
+    for _, value in ipairs(table) do
+        if value == element then
+            return true
+        end
+    end
+    return false
+end
 
 -- Function to generate a random string of given length
 -- we use this to asign a unique id to the react component and the div to inject the component into
@@ -108,7 +120,7 @@ local function include_text_in_document(content, type)
 end
 
 -- Read the contents of a file and return it as a string
-function read_file_to_string(filename)
+local function read_file_to_string(filename)
     local file = io.open(filename, "r") -- Open the file in read mode
     if not file then
         print("Error: File not found or unable to open.")
@@ -150,8 +162,12 @@ local function modify_with_imports(content)
                 local cssPath = quarto.project.directory .. '/' .. resources_folder .. '/' .. normalizedCssLocation
 
                 print('local stylesheet found: ' .. cssPath)
-                -- add the css file to the list of styles to import
-                table.insert(styles_to_import, csslocation)
+
+                -- add the css file to the list of styles to import if it is not already there
+                if not contains(Styles_to_import, csslocation) then
+                    table.insert(Styles_to_import, csslocation)
+                end
+
                 -- remove the import from the content to prevent some browsers trying to fetch local files
                 modified_content = string.gsub(modified_content, line, '')
             end
@@ -166,8 +182,6 @@ local function modify_with_imports(content)
 
                 -- get the path of the file
                 local path = quarto.project.directory .. '/' .. component_folder .. '/' .. normalizedLocation
-
-                -- check if the location is a css file by checking if the last part of the import is ".css"
 
                 -- check for nested react components
                 local scriptFile = tryLoadFile(path, react_component_extensions)
@@ -238,7 +252,7 @@ local function inject_imported_stylesheets()
     local path = quarto.project.directory .. '/' .. resources_folder
 
     -- loop over the styles_to_import array
-    for _, filename in ipairs(styles_to_import) do
+    for _, filename in ipairs(Styles_to_import) do
         print('injecting stylesheet: ' .. filename)
         local content = read_file_to_string(path .. '/' .. filename)
         return include_text_in_document(content, '.css')
@@ -259,10 +273,7 @@ return {
             ensure_babel_transpiler()
             ensure_imports_babel_preset()
 
-            -- add local style sheets
-
-
-
+            -- setup react component
             local componentname = pandoc.utils.stringify(args[1])
             if is_empty(componentname) then
                 error("react: component name is required")
@@ -273,7 +284,7 @@ return {
             -- Add the React injection
             add_react_element(componentname, componentId)
 
-            -- A list of css files to import will have been created when the component was injected
+            -- A list of css files to import will have been created when the component was injected, add these to the document
             inject_imported_stylesheets()
 
             -- Create the div element to place the component in
