@@ -22,10 +22,7 @@ jobs:
             quarto create project website .
         shell: bash
 
-      - name: Render
-        uses: quarto-dev/quarto-actions/render@v2
-
-      - name: Publish
+      - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
