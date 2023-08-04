@@ -15,10 +15,10 @@ Create your component
 
 ``` javascript
 function MyComponent() {    
-    const [text, setText] = React.useState(['this'])
+    const [text, setText] = React.useState(['Click me'])
     return (
-      <div onClick={() => setText((previous) => [previous, ...[' and this']])}>
-        <p>Just like {text.map(value => <span>{value}</span>)} </p>
+      <div onClick={() => setText((previous) => [previous, ...[' and me']])}>
+        <p>{text.map(value => <span>{value}</span>)} </p>
       </div>
     );
   }
@@ -37,13 +37,13 @@ and see the results:
 Create your component, with the styles imported
 
 ``` javascript
-import './style.css'; // We are adding styles here
+import './style.css';
 function MyStyledComponent() {    
     const [text, setText] = React.useState([])
     return (
       <div onClick={() => setText((previous) => [...previous, ' and this one'])}>
         <div className='styled-component-container'>
-          <span className='wrapper-for-other-component'>This one is styled</span> 
+          <span className='wrapper-for-other-component'>Click this one</span> 
           {text.map(value => <span className='wrapper-for-other-component'>{value}</span>)} 
         </div>
       </div>
