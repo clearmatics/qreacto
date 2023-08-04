@@ -112,11 +112,11 @@
     "text": "Nesting components\nCreate your component with the nested components imported and in the jsx\nimport RandomWordsComponent from \"./RandomWordsComponent\";\nimport EmojiComponent from \"./EmojiComponent\";\n\nfunction MyNestedComponent() {\n    return (\n      &lt;div&gt;\n        &lt;RandomWordsComponent/&gt;\n        &lt;EmojiComponent/&gt;\n      &lt;/div&gt;\n    );\n  }\n\nexport default MyNestedComponent\nadd it to your markdown file with {{&lt; react MyNestedComponent &gt;}} and see the results:"
   },
   {
-    "objectID": "example.html#tips-tricks",
-    "href": "example.html#tips-tricks",
+    "objectID": "example.html#gotchas",
+    "href": "example.html#gotchas",
     "title": "Qreacto",
-    "section": "Tips & tricks",
-    "text": "Tips & tricks\n\nDont import react in your file import React from 'react'\ncomponents should be placed in the _components/ folder\nstyles and supporting scripts should be placed in the _components/ folder\nChanges to your component will not refresh quarto, quarto preview or quarto render will need to be called.\nTypescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect\nNamed imports are not currently supported import { NamedButton } from './Button'; will not work but import Button from './Button' will.\nArrow functions are not currently supported. The Babel plugin transform-arrow-functions conflicts with the Babel TypeScript preset. This is currently being investigated.\nDeep imports are not currently supported. components should be placed in the _components/ folder.\nWorks with md and qmd"
+    "section": "Gotchas",
+    "text": "Gotchas\n\nDont import react in your file import React from 'react'\ncomponents should be placed in the _components/ folder\nstyles and supporting scripts should be placed in the _components/ folder\nChanges to your component will not refresh quarto, quarto preview or quarto render will need to be called.\nTypescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect\nNamed imports are not currently supported import { NamedButton } from './Button'; will not work but import Button from './Button' will.\nArrow functions are not currently supported. The Babel plugin transform-arrow-functions conflicts with the Babel TypeScript preset. This is currently being investigated.\nDeep imports are not currently supported. components should be placed in the _components/ folder.\nWorks with md and qmd"
   },
   {
     "objectID": "CONTRIBUTING.html",
