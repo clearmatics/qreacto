@@ -1,4 +1,4 @@
-name: Publish Site to Github pages - Staging
+name: Demo site
 on:
   workflow_dispatch:
   push:
@@ -14,6 +14,13 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: 'Create'
+        env:
+          QUARTO_PRINT_STACK: true
+        run: |
+            quarto create project website .
+        shell: bash
 
       - name: Render
         uses: quarto-dev/quarto-actions/render@v2
