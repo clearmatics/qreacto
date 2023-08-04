@@ -1,0 +1,13 @@
+.wrapper-for-other-component {
+    border: 1px solid tomato;
+    border-radius: 6px;
+    padding: 80px;
+    cursor: pointer;
+}
+
+.styled-component-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+}

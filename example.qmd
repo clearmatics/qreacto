@@ -1,18 +1,149 @@
 ---
-title: React Quarto Extension
+title: Qreacto
 format: html
 filters:
-  - _extensions/reacto/reacto.lua
+  - _extensions/qreacto/qreacto.lua
 ---
-{{< react MyComponent >}}   
 
-{{< react ButtonExample >}}
+Run standalone React components in your Quarto project!
 
-{{< react UseEffect >}}
+## Getting started
 
-{{< react FetchComponent >}}   
+Create your component
 
-{{< react Greeting type="typescript">}}
+``` javascript
+function MyComponent() {    
+    const [text, setText] = React.useState(['this'])
+    return (
+      <div onClick={() => setText((previous) => [previous, ...[' and this']])}>
+        <p>Just like {text.map(value => <span>{value}</span>)} </p>
+      </div>
+    );
+  }
 
-dont include imports of react or any of its names imports, because they are available globally?
+export default MyComponent
+```
 
+add it to your markdown file with `{{{< react MyComponent >}}}`
+
+and see the results:
+
+{{< react MyComponent >}}
+
+## Add styles 
+
+Create your component, with the styles imported
+
+``` javascript
+import './style.css'; // We are adding styles here
+function MyStyledComponent() {    
+    const [text, setText] = React.useState([])
+    return (
+      <div onClick={() => setText((previous) => [...previous, ' and this one'])}>
+        <div className='styled-component-container'>
+          <span className='wrapper-for-other-component'>This one is styled</span> 
+          {text.map(value => <span className='wrapper-for-other-component'>{value}</span>)} 
+        </div>
+      </div>
+    );
+  }
+
+export default MyStyledComponent
+```
+
+add it to your markdown file with `{{{< react MyStyledComponent >}}}`
+
+and see the results:
+
+{{< react MyStyledComponent >}}
+
+## Import local scripts
+
+Create your component, with the scripts imported
+
+``` javascript
+import './style.css';
+import getRandomEmoji from './emojiservice'; // we are importing a script here
+function EmojiComponent() {    
+    const [text, setText] = React.useState([getRandomEmoji()])
+    return (
+      <div onClick={() => setText((previous) => [...previous, getRandomEmoji()])}>
+        <div className='styled-component-container'>          
+          {text.map(value => <span className='wrapper-for-other-component'>{value}</span>)} 
+        </div>
+      </div>
+    );
+  }
+
+export default EmojiComponent
+```
+
+add it to your markdown file with `{{{< react EmojiComponent >}}}`
+
+and see the results:
+
+{{< react EmojiComponent >}}
+
+## Import thirdparty scripts
+
+Create your component, with thirdparty scripts imported
+
+``` javascript
+import './style.css';
+import * as randomWords from 'https://cdn.jsdelivr.net/npm/random-words/+esm'; // we are importing a thirdparty script here
+function RandomWordsComponent() {
+    const [text, setText] = React.useState([randomWords.generate({ maxLength: 8 })])
+    return (
+      <div onClick={() => setText((previous) => [...previous, randomWords.generate({ maxLength: 8 })])}>
+        <div className='styled-component-container'>          
+          {text.map(value => <span className='wrapper-for-other-component'>{value}</span>)} 
+        </div>
+      </div>
+    );
+  }
+
+export default RandomWordsComponent
+```
+
+add it to your markdown file with `{{{< react RandomWordsComponent >}}}`
+
+and see the results:
+
+{{< react RandomWordsComponent >}}
+
+## Nesting components
+
+Create your component with the nested components imported and in the jsx
+
+``` javascript
+import RandomWordsComponent from "./RandomWordsComponent";
+import EmojiComponent from "./EmojiComponent";
+
+function MyNestedComponent() {
+    return (
+      <div>
+        <RandomWordsComponent/>
+        <EmojiComponent/>
+      </div>
+    );
+  }
+
+export default MyNestedComponent
+```
+
+add it to your markdown file with `{{{< react MyNestedComponent >}}}`
+and see the results:
+
+{{< react MyNestedComponent >}}
+
+
+## Tips & tricks
+
+- Dont import react in your file `import React from 'react'` 
+- components should be placed in the `_components/` folder
+- styles and supporting scripts should be placed in the `_components/` folder
+- Changes to your component will not refresh quarto, `quarto preview` will need to be called.
+- Typescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect 
+- Named imports are not currently supported `import { NamedButton } from './Button';` will not work but `import Button from './Button'` will.
+- Arrow functions are not currently supported. The Babel plugin `transform-arrow-functions` conflicts with the Babel TypeScript preset. This is currently being investigated.
+- Deep imports are not currently supported. components should be placed in the _components folder.
