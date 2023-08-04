@@ -2,17 +2,13 @@
 title: React Quarto Extension
 format: html
 filters:
-  - _extensions/reacto/reacto.lua
+  - _extensions/qreacto/qreacto.lua
 ---
-{{< react MyComponent >}}   
 
-{{< react ButtonExample >}}
+Import your react component with {{{< react MyComponent >>}}}
 
-{{< react UseEffect >}}
 
-{{< react FetchComponent >}}   
-
-{{< react Greeting type="typescript">}}
+{{< react Products >}}   
 
 dont include imports of react or any of its names imports, because they are available globally?
 

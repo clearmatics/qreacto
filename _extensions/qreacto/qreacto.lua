@@ -1,8 +1,11 @@
 local component_folder = 'components'
 local resources_folder = 'components'
 local react_component_extensions = { '.jsx', '.tsx' }
-local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true }
-
+local supporting_scripts = { ['.js'] = true, ['.ts'] = true }
+local supported_styles = { ['.css'] = true }
+local imported_supported_files = {}
+local nested_react_components = {}
+local style_imports = {}
 
 -- returns the full file path if it exists
 local function tryLoadFile(filename, extensions)
@@ -106,34 +109,14 @@ local function add_react_element(ComponentName, elementId)
     )
 end
 
-
--- Function to find files with specific extensions in a directory
-local function find_files(directory, extensions)
-    local files = {}
-    local command
-
-    -- Use platform-specific commands to list files in the directory
-    if package.config:sub(1, 1) == '\\' then -- Windows
-        command = 'dir /b "' .. directory .. '"'
-    else                                     -- Unix-like systems (Linux, macOS, etc.)
-        command = 'ls "' .. directory .. '"'
-    end
-
-    local handle = io.popen(command)
-
-    if handle then
-        local output = handle:read("*a")
-        handle:close()
-
-        for file in output:gmatch("[^\r\n]+") do
-            local ext = file:match("^.+(%..+)$")
-            if ext and extensions[ext:lower()] then
-                print('supporting file > ' .. file)
-                table.insert(files, { file, ext })
-            end
+-- Function to check if a table contains a specific element
+local function contains(table, element)
+    for _, value in ipairs(table) do
+        if value == element then
+            return true
         end
     end
-    return files
+    return false
 end
 
 -- given a component as a string, look for local imports
@@ -158,25 +141,38 @@ local function modify_with_imports(content, extension)
                 local normalizedLocation = string.gsub(location, './', '')
 
                 -- get the path of the file
-                local path = quarto.project.directory ..
-                    '/' .. component_folder .. '/' .. normalizedLocation
-                local foundFile = tryLoadFile(path, react_component_extensions)
+                local path = quarto.project.directory .. '/' .. component_folder .. '/' .. normalizedLocation
 
-                -- err if file not found
-                if not foundFile then
-                    error("react: local import not found: " .. path)
+                -- check for nested react components
+                local reactFile = tryLoadFile(path, react_component_extensions)
+                print(contains(imported_supported_files, path))
+                -- only import if jsx or tsx file exists
+                if reactFile then
+                    print('local import found: ' .. path)
+
+                    -- recursive call to get the content of the import
+                    local importContent = read_file_to_string(reactFile)
+
+                    -- push results to array (as there might be more then one import to handle)
+                    table.insert(imported_content, importContent)
+
+                    -- remove the import from the content to prevent some browsers trying to fetch local files
+                    modified_content = string.gsub(modified_content, line, '')
+                else
+                    -- if the file doesn't exist, check if its a css file
+                    local cssFile = tryLoadFile(path, supported_styles)
+                    if cssFile then
+                        print('local css import found: ' .. path)
+                        -- recursive call to get the content of the import
+                        local importContent = read_file_to_string(cssFile)
+
+                        -- push results to array (as there might be more then one import to handle)
+                        table.insert(imported_content, importContent)
+
+                        -- remove the import from the content to prevent some browsers trying to fetch local files
+                        modified_content = string.gsub(modified_content, line, '')
+                    end
                 end
-
-                print('local import found: ' .. path)
-
-                -- recursive call to get the content of the import
-                local importContent = read_file_to_string(foundFile)
-
-                -- push results to array (as there might be more then one import to handle)
-                table.insert(imported_content, importContent)
-
-                -- remove the import from the content to prevent some browsers trying to fetch local files
-                modified_content = string.gsub(modified_content, line, '')
             end
         end
     end
@@ -241,6 +237,7 @@ local function inject_supporting_resources()
         local extension = file[2]
         local content = read_file_to_string(path .. '/' .. filename)
         raw_add_script(content, extension)
+        table.insert(imported_supported_files, path .. '/' .. filename)
     end
 end
 
@@ -251,7 +248,7 @@ return {
             ensure_react_dom()
             ensure_babel_transpiler()
             ensure_imports_babel_preset()
-            inject_supporting_resources()
+            -- inject_supporting_resources()
             local componentname = pandoc.utils.stringify(args[1])
 
             if is_empty(componentname) then
