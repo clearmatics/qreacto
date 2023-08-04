@@ -3,6 +3,8 @@ title: Qreacto
 format: html
 filters:
   - _extensions/qreacto/qreacto.lua
+sidebar: false
+navbar: false
 ---
 
 Run standalone React components in your Quarto project!
