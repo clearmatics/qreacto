@@ -2,6 +2,8 @@
 
 Run standalone React components in your Quarto project!
 
+Check out the [demo](https://clearmatics.github.io/qreacto/example.html)!
+
 ## Installation
 
 To install this extension in your current directory (or into the Quarto project that you're currently working in), use the following command:
