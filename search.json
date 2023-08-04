@@ -81,14 +81,14 @@
     "href": "example.html#getting-started",
     "title": "Qreacto",
     "section": "Getting started",
-    "text": "Getting started\nCreate your component\nfunction MyComponent() {    \n    const [text, setText] = React.useState(['this'])\n    return (\n      &lt;div onClick={() =&gt; setText((previous) =&gt; [previous, ...[' and this']])}&gt;\n        &lt;p&gt;Just like {text.map(value =&gt; &lt;span&gt;{value}&lt;/span&gt;)} &lt;/p&gt;\n      &lt;/div&gt;\n    );\n  }\n\nexport default MyComponent\nadd it to your markdown file with {{&lt; react MyComponent &gt;}}\nand see the results:"
+    "text": "Getting started\nCreate your component\nfunction MyComponent() {    \n    const [text, setText] = React.useState(['Click me'])\n    return (\n      &lt;div onClick={() =&gt; setText((previous) =&gt; [previous, ...[' and me']])}&gt;\n        &lt;p&gt;{text.map(value =&gt; &lt;span&gt;{value}&lt;/span&gt;)} &lt;/p&gt;\n      &lt;/div&gt;\n    );\n  }\n\nexport default MyComponent\nadd it to your markdown file with {{&lt; react MyComponent &gt;}}\nand see the results:"
   },
   {
     "objectID": "example.html#add-styles",
     "href": "example.html#add-styles",
     "title": "Qreacto",
     "section": "Add styles",
-    "text": "Add styles\nCreate your component, with the styles imported\nimport './style.css'; // We are adding styles here\nfunction MyStyledComponent() {    \n    const [text, setText] = React.useState([])\n    return (\n      &lt;div onClick={() =&gt; setText((previous) =&gt; [...previous, ' and this one'])}&gt;\n        &lt;div className='styled-component-container'&gt;\n          &lt;span className='wrapper-for-other-component'&gt;This one is styled&lt;/span&gt; \n          {text.map(value =&gt; &lt;span className='wrapper-for-other-component'&gt;{value}&lt;/span&gt;)} \n        &lt;/div&gt;\n      &lt;/div&gt;\n    );\n  }\n\nexport default MyStyledComponent\nadd it to your markdown file with {{&lt; react MyStyledComponent &gt;}}\nand see the results:"
+    "text": "Add styles\nCreate your component, with the styles imported\nimport './style.css';\nfunction MyStyledComponent() {    \n    const [text, setText] = React.useState([])\n    return (\n      &lt;div onClick={() =&gt; setText((previous) =&gt; [...previous, ' and this one'])}&gt;\n        &lt;div className='styled-component-container'&gt;\n          &lt;span className='wrapper-for-other-component'&gt;Click this one&lt;/span&gt; \n          {text.map(value =&gt; &lt;span className='wrapper-for-other-component'&gt;{value}&lt;/span&gt;)} \n        &lt;/div&gt;\n      &lt;/div&gt;\n    );\n  }\n\nexport default MyStyledComponent\nadd it to your markdown file with {{&lt; react MyStyledComponent &gt;}}\nand see the results:"
   },
   {
     "objectID": "example.html#import-local-scripts",
