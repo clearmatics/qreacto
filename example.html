@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> MyComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react MyComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-MyComponent-fuYZC8pA"></div><p></p>
+<p></p><div id="react-MyComponent-r5WKfSbK"></div><p></p>
 </section>
 <section id="add-styles" class="level2">
 <h2 class="anchored" data-anchor-id="add-styles">Add styles</h2>
@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> MyStyledComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react MyStyledComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-MyStyledComponent-XD7m7Dpu"></div><p></p>
+<p></p><div id="react-MyStyledComponent-nCs9pD1r"></div><p></p>
 </section>
 <section id="import-local-scripts" class="level2">
 <h2 class="anchored" data-anchor-id="import-local-scripts">Import local scripts</h2>
@@ -253,11 +253,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> EmojiComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react EmojiComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-EmojiComponent-j74R5mSp"></div><p></p>
+<p></p><div id="react-EmojiComponent-OahtUo5D"></div><p></p>
 </section>
 <section id="import-thirdparty-scripts" class="level2">
 <h2 class="anchored" data-anchor-id="import-thirdparty-scripts">Import thirdparty scripts</h2>
-<p>Create your component, with thirdparty scripts imported</p>
+<p>Create your component, with thirdparty scripts imported.</p>
+<p>Any CDN that supports ESM packages can be used, like <a href="https://www.jsdelivr.com/esm">jsDelivr</a></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="st">'./style.css'</span><span class="op">;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="op">*</span> <span class="im">as</span> randomWords <span class="im">from</span> <span class="st">'https://cdn.jsdelivr.net/npm/random-words/+esm'</span><span class="op">;</span> <span class="co">// we are importing a thirdparty script here</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">RandomWordsComponent</span>() {</span>
@@ -274,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> RandomWordsComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react RandomWordsComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-RandomWordsComponent-IDdvX11e"></div><p></p>
+<p></p><div id="react-RandomWordsComponent-dGSTpAGg"></div><p></p>
 </section>
 <section id="nesting-components" class="level2">
 <h2 class="anchored" data-anchor-id="nesting-components">Nesting components</h2>
@@ -293,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> MyNestedComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react MyNestedComponent &gt;}}</code> and see the results:</p>
-<p></p><div id="react-MyNestedComponent-hTUsttfz"></div><p></p>
+<p></p><div id="react-MyNestedComponent-4XJLYJVH"></div><p></p>
 </section>
 <section id="tips-tricks" class="level2">
 <h2 class="anchored" data-anchor-id="tips-tricks">Tips &amp; tricks</h2>
@@ -301,11 +302,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Dont import react in your file <code>import React from 'react'</code></li>
 <li>components should be placed in the <code>_components/</code> folder</li>
 <li>styles and supporting scripts should be placed in the <code>_components/</code> folder</li>
-<li>Changes to your component will not refresh quarto, <code>quarto preview</code> will need to be called.</li>
+<li>Changes to your component will not refresh quarto, <code>quarto preview</code> or <code>quarto render</code> will need to be called.</li>
 <li>Typescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect</li>
 <li>Named imports are not currently supported <code>import { NamedButton } from './Button';</code> will not work but <code>import Button from './Button'</code> will.</li>
 <li>Arrow functions are not currently supported. The Babel plugin <code>transform-arrow-functions</code> conflicts with the Babel TypeScript preset. This is currently being investigated.</li>
-<li>Deep imports are not currently supported. components should be placed in the _components folder.</li>
+<li>Deep imports are not currently supported. components should be placed in the <code>_components/</code> folder.</li>
+<li>Works with <code>md</code> and <code>qmd</code></li>
 </ul>
 
 
@@ -555,7 +557,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <MyComponent/>  </React.StrictMode>,  document.getElementById("react-MyComponent-fuYZC8pA") );</script>
+ReactDOM.render( <React.StrictMode>    <MyComponent/>  </React.StrictMode>,  document.getElementById("react-MyComponent-r5WKfSbK") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
 function MyStyledComponent() {    
     const [text, setText] = React.useState([])
@@ -569,7 +571,7 @@ function MyStyledComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <MyStyledComponent/>  </React.StrictMode>,  document.getElementById("react-MyStyledComponent-XD7m7Dpu") );</script>
+ReactDOM.render( <React.StrictMode>    <MyStyledComponent/>  </React.StrictMode>,  document.getElementById("react-MyStyledComponent-nCs9pD1r") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">function getRandomEmoji() {
     const emojis = ["😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊", "😋", "😎", "😍", "😘", "🥰", "😗", "😙", "😚", "🙂", "🤗", "🤩", "🤔", "🤨", "😐", "😑", "😶", "🙄", "😏", "😣", "😥", "😮", "🤐", "😯", "😪", "😫", "😴", "😌", "😛", "😜", "😝", "🤤", "😒", "😓", "😔", "😕", "🙃", "🤑", "😲", "🙁", "😖", "😞", "😟", "😤", "😢", "😭", "😦", "😧", "😨", "😩", "🤯", "😬", "😰", "😱", "🥵", "🥶", "😳", "🤪", "😵", "😡", "😠", "🤬", "😷", "🤒", "🤕", "🤢", "🤮", "🤧", "😇", "🥳", "🥴", "🥺", "🤠", "🤡", "🤥", "🤫", "🤭", "🧐", "🤓", "😈", "👿", "🤖", "🎃", "👏", "🙌", "👍", "👎", "👊", "✊", "🤛", "🤜", "🤚", "👋", "✋", "🖖", "👌", "✌️", "🤞", "🤟", "🤘", "🤙", "💪", "🖕", "✍️", "🙏", "💍", "💄", "💋", "👄", "👅", "👂", "👃", "👣", "👁", "👀", "🧠", "🦷", "🦴", "👦", "👧", "🧒", "👶", "👩", "🧑", "👨"]
     return emojis[Math.floor(Math.random() * emojis.length)]
@@ -589,7 +591,7 @@ function EmojiComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <EmojiComponent/>  </React.StrictMode>,  document.getElementById("react-EmojiComponent-j74R5mSp") );</script>
+ReactDOM.render( <React.StrictMode>    <EmojiComponent/>  </React.StrictMode>,  document.getElementById("react-EmojiComponent-OahtUo5D") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
 import * as randomWords from 'https://cdn.jsdelivr.net/npm/random-words/+esm';
 function RandomWordsComponent() {
@@ -603,7 +605,7 @@ function RandomWordsComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <RandomWordsComponent/>  </React.StrictMode>,  document.getElementById("react-RandomWordsComponent-IDdvX11e") );</script>
+ReactDOM.render( <React.StrictMode>    <RandomWordsComponent/>  </React.StrictMode>,  document.getElementById("react-RandomWordsComponent-dGSTpAGg") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
 import * as randomWords from 'https://cdn.jsdelivr.net/npm/random-words/+esm';
 function RandomWordsComponent() {
@@ -649,7 +651,7 @@ function MyNestedComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <MyNestedComponent/>  </React.StrictMode>,  document.getElementById("react-MyNestedComponent-hTUsttfz") );</script>
+ReactDOM.render( <React.StrictMode>    <MyNestedComponent/>  </React.StrictMode>,  document.getElementById("react-MyNestedComponent-4XJLYJVH") );</script>
 
 
 
