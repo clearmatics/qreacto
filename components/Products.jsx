@@ -1,8 +1,8 @@
 
 import fetchData from "./fetchingservice";
-
+import List from "./List";
 /**
- * An example of react with fetch
+ * An example of react component with a fetch service imported
  * @returns 
  */
 function Products() {
@@ -10,7 +10,7 @@ function Products() {
 
     return (
       <div>
-        <ButtonExample />
+        <List />
         <button onClick={fetchData}>Fetch Data</button>
         <div>
           {data ? (
