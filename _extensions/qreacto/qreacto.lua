@@ -287,39 +287,32 @@ local function trimString(content)
     return content:gsub("^%s*(.-)%s*$", "%1")
 end
 
--- The MetaList function can be used to access lists in the metadata.
-function Meta(meta)
-    -- Accessing the `react` object from the metadata
-    local reactSettings = meta["react"]
-
-    -- Function to convert Pandoc Inlines to plain string
-    local function inlines_to_string(inlines)
-        local buffer = {}
-        for _, inline in ipairs(inlines) do
-            if inline.t == "Str" then
-                table.insert(buffer, inline.text)
-            end
+-- Function to convert Pandoc Inlines to plain string
+local function inlines_to_string(inlines)
+    local buffer = {}
+    for _, inline in ipairs(inlines) do
+        if inline.t == "Str" then
+            table.insert(buffer, inline.text)
         end
-        return table.concat(buffer)
     end
+    return table.concat(buffer)
+end
 
-
+-- sets the configuration for the react component folder and resources folder
+local function set_configuration(reactSettings)
     local resourcesPath = reactSettings and inlines_to_string(reactSettings["resources"])
     local componentsPath = reactSettings and inlines_to_string(reactSettings["components"])
-
-
     if resourcesPath then
-        print('React resources folder: ' .. resourcesPath)
+        print('setting resources path..')
         resources_folder = trimString(resourcesPath)
     end
 
     if componentsPath then
-        print('React components folder: ' .. componentsPath)
+        print('setting components path..')
         component_folder = trimString(componentsPath)
     end
-
-    return meta
 end
+
 
 --[[
 ============================================================================
@@ -327,8 +320,13 @@ Script entry point
 ============================================================================
 ]]
 return {
-    Meta = Meta,
-    ["react"] = function(args, kwargs)
+    ["react"] = function(args, kwargs, meta)
+        -- Accessing the `react` object from the metadata (_quarto.yml)
+        local reactSettings = meta["react"]
+        if reactSettings then
+            set_configuration(reactSettings)
+        end
+
         if quarto.doc.is_format("html:js") then
             -- add dependencies for react
             ensure_react()
