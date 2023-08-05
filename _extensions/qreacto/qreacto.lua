@@ -283,12 +283,51 @@ local function inject_imported_stylesheets()
     end
 end
 
+local function trimString(content)
+    return content:gsub("^%s*(.-)%s*$", "%1")
+end
+
+-- The MetaList function can be used to access lists in the metadata.
+function Meta(meta)
+    -- Accessing the `react` object from the metadata
+    local reactSettings = meta["react"]
+
+    -- Function to convert Pandoc Inlines to plain string
+    local function inlines_to_string(inlines)
+        local buffer = {}
+        for _, inline in ipairs(inlines) do
+            if inline.t == "Str" then
+                table.insert(buffer, inline.text)
+            end
+        end
+        return table.concat(buffer)
+    end
+
+
+    local resourcesPath = reactSettings and inlines_to_string(reactSettings["resources"])
+    local componentsPath = reactSettings and inlines_to_string(reactSettings["components"])
+
+
+    if resourcesPath then
+        print('React resources folder: ' .. resourcesPath)
+        resources_folder = trimString(resourcesPath)
+    end
+
+    if componentsPath then
+        print('React components folder: ' .. componentsPath)
+        component_folder = trimString(componentsPath)
+    end
+
+    return meta
+end
+
 --[[
 ============================================================================
 Script entry point
 ============================================================================
 ]]
 return {
+    Meta = Meta,
     ["react"] = function(args, kwargs)
         if quarto.doc.is_format("html:js") then
             -- add dependencies for react
