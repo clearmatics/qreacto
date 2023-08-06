@@ -141,6 +141,15 @@ and see the results:
 
 {{< react MyNestedComponent >}}
 
+## Configuring
+
+You can (optionally) specify the location for your components and resources
+
+``` yaml
+    react:
+        components: _components
+        resources: _resources
+```
 
 ## Gotchas
 

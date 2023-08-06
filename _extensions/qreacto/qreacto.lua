@@ -283,13 +283,50 @@ local function inject_imported_stylesheets()
     end
 end
 
+local function trimString(content)
+    return content:gsub("^%s*(.-)%s*$", "%1")
+end
+
+-- Function to convert Pandoc Inlines to plain string
+local function inlines_to_string(inlines)
+    local buffer = {}
+    for _, inline in ipairs(inlines) do
+        if inline.t == "Str" then
+            table.insert(buffer, inline.text)
+        end
+    end
+    return table.concat(buffer)
+end
+
+-- sets the configuration for the react component folder and resources folder
+local function set_configuration(reactSettings)
+    local resourcesPath = reactSettings and inlines_to_string(reactSettings["resources"])
+    local componentsPath = reactSettings and inlines_to_string(reactSettings["components"])
+    if resourcesPath then
+        print('setting resources path..')
+        resources_folder = trimString(resourcesPath)
+    end
+
+    if componentsPath then
+        print('setting components path..')
+        component_folder = trimString(componentsPath)
+    end
+end
+
+
 --[[
 ============================================================================
 Script entry point
 ============================================================================
 ]]
 return {
-    ["react"] = function(args, kwargs)
+    ["react"] = function(args, kwargs, meta)
+        -- Accessing the `react` object from the metadata (_quarto.yml)
+        local reactSettings = meta["react"]
+        if reactSettings then
+            set_configuration(reactSettings)
+        end
+
         if quarto.doc.is_format("html:js") then
             -- add dependencies for react
             ensure_react()

@@ -74,6 +74,16 @@ function FetchComponent() {
 }
 ```
 
+## Configuring
+
+In your `_quarto.yml` file, you can configure react to look in a different folder for components and resources:
+
+``` yaml
+    react:
+        components: _components
+        resources: _components
+```
+
 Currently, components can only be imported from the same folder. If you have a component in a subfolder, you will need to move it to the same folder as the component you are importing it into.
 
 **Note:** The files should use the same extension as the component you are importing into. For instance, if you are importing into a `.tsx` file, the files you are importing should also be `.tsx` files.
