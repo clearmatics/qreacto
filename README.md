@@ -45,7 +45,7 @@ However, you can also be explicit:
 
 Ensure that the name of the component and the name of the file match for the filter to work correctly. **It is also case sensitive.**
 
-For example, if the component is named `FetchComponent`, save it in the file `components/FetchComponent.jsx` for JavaScript or `components/FetchComponent.tsx` for TypeScript.
+For example, if the component is named `FetchComponent`, save it in the file `_components/FetchComponent.jsx` for JavaScript or `_components/FetchComponent.tsx` for TypeScript.
 
 ## Adding thirdparty imports
 
@@ -92,21 +92,12 @@ Currently, components can only be imported from the same folder. If you have a c
 
 JavaScript and CSS files are automatically included in the page. If your component requires a CSS file, include it in the same folder as the component, and it will be included in the page.
 
-Supported files are currently pulled from the `components` folder. The accepted extensions include `.css`, `.js`, and `.ts`.
-
-You can modify the `reacto.lua` script to change where it looks for resources:
-
-``` lua
-local component_folder = 'components' -- This is where the script looks for react components
-local resources_folder = 'components' -- This is where the script looks for supporting files 
-local react_component_extensions = { '.jsx', '.tsx' } -- These are the accepted react extensions
-local supporting_extensions = { ['.css'] = true, ['.js'] = true, ['.ts'] = true } -- These are the accepted supporting extensions.
-```
+Supported files are currently pulled from the `_components` folder (or if the folder you specified in your quarto.yml file). The accepted extensions include `.css`, `.js`, and `.ts`.
 
 ## Gotchas
 
 - Avoid including imports of React in your component, as Babel will already provide this on the window.
-
+- Importing and using some ESM React components can cause the compiler to fail. This can be a bit hit and miss. Some components like [react-google-recaptcha](https://www.npmjs.com/package/react-google-recaptcha) worked fine, but others had compilation issues. Remember, this extension is designed to build small lightweight components to compliment your Quarto project. If you're pulling in lots of outside React components, consider creating a react app instead.
 
 ## Known issues and tasks still to do
 - [ ] Arrow functions are not currently supported. The Babel plugin `transform-arrow-functions` conflicts with the Babel TypeScript preset. This is currently being investigated.
