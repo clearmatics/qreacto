@@ -92,7 +92,7 @@ Currently, components can only be imported from the same folder. If you have a c
 
 JavaScript and CSS files are automatically included in the page. If your component requires a CSS file, include it in the same folder as the component, and it will be included in the page.
 
-Supported files are currently pulled from the `_components` folder (or if the folder you specified in your quarto.yml file). The accepted extensions include `.css`, `.js`, and `.ts`.
+Supported files are currently pulled from the `_components` folder (or the folder you specified in your _quarto.yml file). The accepted extensions include `.css`, `.js`, and `.ts`.
 
 ## Gotchas
 
