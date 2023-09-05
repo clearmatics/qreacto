@@ -14,7 +14,7 @@ quarto add clearmatics/qreacto
 
 ## Running a React component
 
-To run a React component, first, create a folder called `components/` in the root of the project.
+To run a React component, first, create a folder called `_components/` in the root of the project.
 Then in that folder, create your component in a .jsx or .tsx file. For example:
 
 
