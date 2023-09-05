@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/clearmatics/qreacto/about.html</loc>
-    <lastmod>2023-08-06T06:01:32.986Z</lastmod>
-  </url>
-  <url>
     <loc>https://github.com/clearmatics/qreacto/CODE_OF_CONDUCT.html</loc>
-    <lastmod>2023-08-06T06:01:32.390Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/clearmatics/qreacto/index.html</loc>
-    <lastmod>2023-08-06T06:01:31.174Z</lastmod>
+    <lastmod>2023-09-05T10:43:56.517Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clearmatics/qreacto/example.html</loc>
-    <lastmod>2023-08-06T06:01:31.966Z</lastmod>
+    <lastmod>2023-09-05T10:43:55.837Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clearmatics/qreacto/index.html</loc>
+    <lastmod>2023-09-05T10:43:54.729Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/clearmatics/qreacto/CONTRIBUTING.html</loc>
-    <lastmod>2023-08-06T06:01:32.722Z</lastmod>
+    <lastmod>2023-09-05T10:43:55.389Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/clearmatics/qreacto/about.html</loc>
+    <lastmod>2023-09-05T10:43:56.109Z</lastmod>
   </url>
 </urlset>

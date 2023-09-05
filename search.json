@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
     "objectID": "CODE_OF_CONDUCT.html",
     "href": "CODE_OF_CONDUCT.html",
     "title": "Contributor Covenant Code of Conduct",
@@ -61,13 +54,6 @@
     "title": "Contributor Covenant Code of Conduct",
     "section": "",
     "text": "This Code of Conduct is adapted from the Contributor Covenant, version 2.1, available at https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.\nCommunity Impact Guidelines were inspired by Mozilla’s code of conduct enforcement ladder.\nFor answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": ".",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   },
   {
     "objectID": "example.html",
@@ -126,6 +112,13 @@
     "text": "Gotchas\n\nDont import react in your file import React from 'react'\ncomponents should be placed in the _components/ folder\nstyles and supporting scripts should be placed in the _components/ folder\nChanges to your component will not refresh quarto, quarto preview or quarto render will need to be called.\nTypescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect\nNamed imports are not currently supported import { NamedButton } from './Button'; will not work but import Button from './Button' will.\nDeep imports are not currently supported. components should be placed in the _components/ folder.\nWorks with md and qmd other extensions might work but have not been tested."
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": ".",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
     "objectID": "CONTRIBUTING.html",
     "href": "CONTRIBUTING.html",
     "title": "Contributing",
@@ -145,5 +138,12 @@
     "title": "Contributing",
     "section": "",
     "text": "This project and everyone participating in it is governed by the Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to opensource@clearmatics.com."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
   }
 ]
