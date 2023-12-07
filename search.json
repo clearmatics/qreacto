@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "CONTRIBUTING.html",
+    "href": "CONTRIBUTING.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.\nPlease note we have a code of conduct, please follow it in all your interactions with the project.\n\n\n\nEnsure any install or build dependencies are removed before the end of the layer when doing a build.\nUpdate the README.md with details of changes to the interface, this includes new environment variables, exposed ports, useful file locations and container parameters.\nIncrease the version numbers in any examples files and the README.md to the new version that this Pull Request would represent. The versioning scheme we use is SemVer.\nYou may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.\n\n\n\n\nThis project and everyone participating in it is governed by the Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to opensource@clearmatics.com."
+  },
+  {
+    "objectID": "CONTRIBUTING.html#pull-request-process",
+    "href": "CONTRIBUTING.html#pull-request-process",
+    "title": "Contributing",
+    "section": "",
+    "text": "Ensure any install or build dependencies are removed before the end of the layer when doing a build.\nUpdate the README.md with details of changes to the interface, this includes new environment variables, exposed ports, useful file locations and container parameters.\nIncrease the version numbers in any examples files and the README.md to the new version that this Pull Request would represent. The versioning scheme we use is SemVer.\nYou may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you."
+  },
+  {
+    "objectID": "CONTRIBUTING.html#code-of-conduct",
+    "href": "CONTRIBUTING.html#code-of-conduct",
+    "title": "Contributing",
+    "section": "",
+    "text": "This project and everyone participating in it is governed by the Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to opensource@clearmatics.com."
+  },
+  {
     "objectID": "CODE_OF_CONDUCT.html",
     "href": "CODE_OF_CONDUCT.html",
     "title": "Contributor Covenant Code of Conduct",
@@ -56,6 +77,13 @@
     "text": "This Code of Conduct is adapted from the Contributor Covenant, version 2.1, available at https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.\nCommunity Impact Guidelines were inspired by Mozilla’s code of conduct enforcement ladder.\nFor answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations."
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": ".",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
     "objectID": "example.html",
     "href": "example.html",
     "title": "Qreacto",
@@ -110,34 +138,6 @@
     "title": "Qreacto",
     "section": "Gotchas",
     "text": "Gotchas\n\nDont import react in your file import React from 'react'\ncomponents should be placed in the _components/ folder\nstyles and supporting scripts should be placed in the _components/ folder\nChanges to your component will not refresh quarto, quarto preview or quarto render will need to be called.\nTypescript is supported but is limited to babels transpilation support of TS. As such, it may not have the latest features you would expect\nNamed imports are not currently supported import { NamedButton } from './Button'; will not work but import Button from './Button' will.\nDeep imports are not currently supported. components should be placed in the _components/ folder.\nWorks with md and qmd other extensions might work but have not been tested."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": ".",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "CONTRIBUTING.html",
-    "href": "CONTRIBUTING.html",
-    "title": "Contributing",
-    "section": "",
-    "text": "When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.\nPlease note we have a code of conduct, please follow it in all your interactions with the project.\n\n\n\nEnsure any install or build dependencies are removed before the end of the layer when doing a build.\nUpdate the README.md with details of changes to the interface, this includes new environment variables, exposed ports, useful file locations and container parameters.\nIncrease the version numbers in any examples files and the README.md to the new version that this Pull Request would represent. The versioning scheme we use is SemVer.\nYou may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.\n\n\n\n\nThis project and everyone participating in it is governed by the Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to opensource@clearmatics.com."
-  },
-  {
-    "objectID": "CONTRIBUTING.html#pull-request-process",
-    "href": "CONTRIBUTING.html#pull-request-process",
-    "title": "Contributing",
-    "section": "",
-    "text": "Ensure any install or build dependencies are removed before the end of the layer when doing a build.\nUpdate the README.md with details of changes to the interface, this includes new environment variables, exposed ports, useful file locations and container parameters.\nIncrease the version numbers in any examples files and the README.md to the new version that this Pull Request would represent. The versioning scheme we use is SemVer.\nYou may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you."
-  },
-  {
-    "objectID": "CONTRIBUTING.html#code-of-conduct",
-    "href": "CONTRIBUTING.html#code-of-conduct",
-    "title": "Contributing",
-    "section": "",
-    "text": "This project and everyone participating in it is governed by the Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to opensource@clearmatics.com."
   },
   {
     "objectID": "about.html",
