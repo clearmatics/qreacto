@@ -108,7 +108,7 @@ Supported files are currently pulled from the `_components` folder (or the folde
 
 ## Getting started with development
 
-If you would like to contribute, there's a [readme](_extension/qreacto/README.md) in the `_extension/qreacto` folder that explains the codeflow for the qreacto.lua script, its a great place to start.
+If you would like to contribute, there's a [readme](https://github.com/clearmatics/qreacto/blob/main/_extensions/qreacto/README.md) in the `_extension/qreacto` folder that explains the codeflow for the qreacto.lua script, its a great place to start.
 
 To develop the extension, you need to run it in a Quarto project. The quickest way to set up a project is by running the following command in the root directory:
 
