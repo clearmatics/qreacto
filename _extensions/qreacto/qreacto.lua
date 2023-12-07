@@ -111,7 +111,7 @@ local function tryLoadFile(filename, extensions)
     for _, ext in ipairs(extensions) do
         local fullFilename = filename .. ext
         local file = io.open(fullFilename, "r")
-        print('trying (case-sensitive): ' .. fullFilename)
+        -- print('trying (case-sensitive): ' .. fullFilename)
         if file then
             file:close()
             return fullFilename
@@ -185,7 +185,7 @@ local function modify_with_imports(content)
                 -- get the path of the file
                 local cssPath = quarto.project.directory .. '/' .. resources_folder .. '/' .. normalizedCssLocation
 
-                print('local stylesheet found: ' .. cssPath)
+                -- print('local stylesheet found: ' .. cssPath)
 
                 -- add the css file to the list of styles to import if it is not already there
                 if not contains(Styles_to_import, csslocation) then
@@ -212,7 +212,7 @@ local function modify_with_imports(content)
 
                 -- only import if jsx or tsx file exists
                 if scriptFile then
-                    print('local import found: ' .. path)
+                    -- print('local import found: ' .. path)
 
                     -- recursive call to get the content of the import
                     local importContent = modify_with_imports(read_file_to_string(scriptFile))
@@ -277,7 +277,7 @@ local function inject_imported_stylesheets()
 
     -- loop over the styles_to_import array
     for _, filename in ipairs(Styles_to_import) do
-        print('injecting stylesheet: ' .. filename)
+        -- print('injecting stylesheet: ' .. filename)
         local content = read_file_to_string(path .. '/' .. filename)
         return include_text_in_document(content, '.css')
     end
