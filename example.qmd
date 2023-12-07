@@ -141,6 +141,34 @@ and see the results:
 
 {{< react MyNestedComponent >}}
 
+## Using environment variables
+
+Add your environment variables as specified on the [official documentation](https://quarto.org/docs/projects/environment.html)
+Qreacto will pick up environment variables that begin with `QREACTO_`
+They can then be accessed with `process.env....`'''
+
+{{< react EnvironmentReadingComponent >}}
+
+
+The enviornment file:
+``` bash
+QREACTO_FOO=bar
+QREACTO_TEST=Very true
+```
+Results in:
+``` json
+ {
+  env: { 
+      QREACTO_FOO:"bar"
+      QREACTO_TEST:"Very true"
+  }
+ }
+```
+and can be accessed with:
+``` javascript
+ console.log(process.env.QREACTO_FOO)
+ console.log(process.env.QREACTO_TEST)
+```
 ## Configuring
 
 You can (optionally) specify the location for your components and resources
