@@ -169,6 +169,7 @@ and can be accessed with:
  console.log(process.env.QREACTO_FOO)
  console.log(process.env.QREACTO_TEST)
 ```
+**Note** Qreacto only looks for `_environment` files, not iterations of this file (eg _environment-dev, _environment-prod)
 ## Configuring
 
 You can (optionally) specify the location for your components and resources
