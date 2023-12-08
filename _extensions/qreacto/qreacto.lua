@@ -111,7 +111,7 @@ local function tryLoadFile(filename, extensions)
     for _, ext in ipairs(extensions) do
         local fullFilename = filename .. ext
         local file = io.open(fullFilename, "r")
-        print('trying (case-sensitive): ' .. fullFilename)
+        -- print('trying (case-sensitive): ' .. fullFilename)
         if file then
             file:close()
             return fullFilename
@@ -185,7 +185,7 @@ local function modify_with_imports(content)
                 -- get the path of the file
                 local cssPath = quarto.project.directory .. '/' .. resources_folder .. '/' .. normalizedCssLocation
 
-                print('local stylesheet found: ' .. cssPath)
+                -- print('local stylesheet found: ' .. cssPath)
 
                 -- add the css file to the list of styles to import if it is not already there
                 if not contains(Styles_to_import, csslocation) then
@@ -212,7 +212,7 @@ local function modify_with_imports(content)
 
                 -- only import if jsx or tsx file exists
                 if scriptFile then
-                    print('local import found: ' .. path)
+                    -- print('local import found: ' .. path)
 
                     -- recursive call to get the content of the import
                     local importContent = modify_with_imports(read_file_to_string(scriptFile))
@@ -277,7 +277,7 @@ local function inject_imported_stylesheets()
 
     -- loop over the styles_to_import array
     for _, filename in ipairs(Styles_to_import) do
-        print('injecting stylesheet: ' .. filename)
+        -- print('injecting stylesheet: ' .. filename)
         local content = read_file_to_string(path .. '/' .. filename)
         return include_text_in_document(content, '.css')
     end
@@ -313,6 +313,37 @@ local function set_configuration(reactSettings)
     end
 end
 
+--[[
+    checks for existance of Quarto environment file and then creates a global object from it
+    only inject variables that begin with "QREACTO_"
+    Accessible from react with process.env.QREACTO_VARIABLE_NAME
+    see Quarto for details on how to implement environment variables https://quarto.org/docs/projects/environment.html
+]]--
+local function get_environment_variables()
+    
+    -- load environment variables from _environment if it exists
+    local env = quarto.project.directory .. '/_environment'
+    local envFile = io.open(env, "r")  -- Open the file in read mode
+    -- check if it exists
+    if envFile then
+        local envContent = envFile:read("*all")
+        envFile:close()
+    
+        local envVars = {}
+        for line in envContent:gmatch("[^\r\n]+") do
+            local key, value = line:match("^([^=]+)=(.*)$")
+            -- Check if the key starts with 'QREACTO_'
+            if key and value and key:sub(1, 8) == "QREACTO_" then
+                table.insert(envVars, '"' .. key .. '":"' .. value .. '"')
+            end
+        end
+    
+        local envJSON = '{' .. table.concat(envVars, ',') .. '}'
+        local jsContent = 'window.process = { env: ' .. envJSON .. '};'        
+        quarto.doc.include_text('in-header', '<script type="text/javascript" id="environment_variables">' .. jsContent .. '</script>')
+    end
+end
+
 
 --[[
 ============================================================================
@@ -333,7 +364,8 @@ return {
             ensure_react_dom()
             ensure_babel_transpiler()
             ensure_imports_babel_preset()
-
+            get_environment_variables()
+            
             -- setup react component
             local componentname = pandoc.utils.stringify(args[1])
             if is_empty(componentname) then
