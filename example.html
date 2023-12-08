@@ -97,6 +97,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="text/javascript" id="environment_variables">window.process = { env: {"QREACTO_FOO":"bar","QREACTO_TEST":"Very true"}};</script>
+<script type="text/javascript" id="environment_variables">window.process = { env: {"QREACTO_FOO":"bar","QREACTO_TEST":"Very true"}};</script>
 <style>.wrapper-for-other-component {
     border: 1px solid tomato;
     border-radius: 6px;
@@ -110,6 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     flex-wrap: wrap;
     gap: 12px;
 }</style>
+<script type="text/javascript" id="environment_variables">window.process = { env: {"QREACTO_FOO":"bar","QREACTO_TEST":"Very true"}};</script>
 <style>.wrapper-for-other-component {
     border: 1px solid tomato;
     border-radius: 6px;
@@ -123,6 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     flex-wrap: wrap;
     gap: 12px;
 }</style>
+<script type="text/javascript" id="environment_variables">window.process = { env: {"QREACTO_FOO":"bar","QREACTO_TEST":"Very true"}};</script>
 <style>.wrapper-for-other-component {
     border: 1px solid tomato;
     border-radius: 6px;
@@ -136,6 +140,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     flex-wrap: wrap;
     gap: 12px;
 }</style>
+<script type="text/javascript" id="environment_variables">window.process = { env: {"QREACTO_FOO":"bar","QREACTO_TEST":"Very true"}};</script>
+<style>.wrapper-for-other-component {
+    border: 1px solid tomato;
+    border-radius: 6px;
+    padding: 80px;
+    cursor: pointer;
+}
+
+.styled-component-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+}</style>
+<script type="text/javascript" id="environment_variables">window.process = { env: {"QREACTO_FOO":"bar","QREACTO_TEST":"Very true"}};</script>
 <style>.wrapper-for-other-component {
     border: 1px solid tomato;
     border-radius: 6px;
@@ -171,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#import-local-scripts" id="toc-import-local-scripts" class="nav-link" data-scroll-target="#import-local-scripts">Import local scripts</a></li>
   <li><a href="#import-thirdparty-scripts" id="toc-import-thirdparty-scripts" class="nav-link" data-scroll-target="#import-thirdparty-scripts">Import thirdparty scripts</a></li>
   <li><a href="#nesting-components" id="toc-nesting-components" class="nav-link" data-scroll-target="#nesting-components">Nesting components</a></li>
-  <li><a href="#configuring" id="toc-configuring" class="nav-link" data-scroll-target="#configuring">Configuring</a></li>
+  <li><a href="#using-environment-variables" id="toc-using-environment-variables" class="nav-link" data-scroll-target="#using-environment-variables">Using environment variables</a></li>
   <li><a href="#gotchas" id="toc-gotchas" class="nav-link" data-scroll-target="#gotchas">Gotchas</a></li>
   </ul>
 </nav>
@@ -212,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> MyComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react MyComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-MyComponent-j8cwW9C5"></div><p></p>
+<p></p><div id="react-MyComponent-QVW5FyDj"></div><p></p>
 </section>
 <section id="add-styles" class="level2">
 <h2 class="anchored" data-anchor-id="add-styles">Add styles</h2>
@@ -233,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> MyStyledComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react MyStyledComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-MyStyledComponent-4kXijp4f"></div><p></p>
+<p></p><div id="react-MyStyledComponent-90EH9afP"></div><p></p>
 </section>
 <section id="import-local-scripts" class="level2">
 <h2 class="anchored" data-anchor-id="import-local-scripts">Import local scripts</h2>
@@ -254,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> EmojiComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react EmojiComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-EmojiComponent-S9dkmbif"></div><p></p>
+<p></p><div id="react-EmojiComponent-uvTZK4rj"></div><p></p>
 </section>
 <section id="import-thirdparty-scripts" class="level2">
 <h2 class="anchored" data-anchor-id="import-thirdparty-scripts">Import thirdparty scripts</h2>
@@ -276,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> RandomWordsComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react RandomWordsComponent &gt;}}</code></p>
 <p>and see the results:</p>
-<p></p><div id="react-RandomWordsComponent-7MwzpgvL"></div><p></p>
+<p></p><div id="react-RandomWordsComponent-ml2lhibG"></div><p></p>
 </section>
 <section id="nesting-components" class="level2">
 <h2 class="anchored" data-anchor-id="nesting-components">Nesting components</h2>
@@ -295,14 +314,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> MyNestedComponent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>add it to your markdown file with <code>{{&lt; react MyNestedComponent &gt;}}</code> and see the results:</p>
-<p></p><div id="react-MyNestedComponent-RITlrxxa"></div><p></p>
+<p></p><div id="react-MyNestedComponent-K0DTFZWM"></div><p></p>
 </section>
-<section id="configuring" class="level2">
-<h2 class="anchored" data-anchor-id="configuring">Configuring</h2>
+<section id="using-environment-variables" class="level2">
+<h2 class="anchored" data-anchor-id="using-environment-variables">Using environment variables</h2>
+<p>Add your environment variables as specified on the <a href="https://quarto.org/docs/projects/environment.html">official documentation</a> Qreacto will pick up environment variables that begin with <code>QREACTO_</code> They can then be accessed with <code>process.env....</code>’’’</p>
+<p></p><div id="react-EnvironmentReadingComponent-pT4e4WjI"></div><p></p>
+<p>The enviornment file:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">QREACTO_FOO</span><span class="op">=</span>bar</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">QREACTO_TEST</span><span class="op">=</span>Very <span class="fu">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Results in:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">env</span><span class="fu">:</span> <span class="fu">{</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>      <span class="er">QREACTO_FOO</span><span class="fu">:</span><span class="st">"bar"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="er">QREACTO_TEST:</span><span class="st">"Very true"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and can be accessed with:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">QREACTO_FOO</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">QREACTO_TEST</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Note</strong> Qreacto only looks for <code>_environment</code> files, not iterations of this file (eg _environment-dev, _environment-prod) ## Configuring</p>
 <p>You can (optionally) specify the location for your components and resources</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">react</span><span class="kw">:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">components</span><span class="kw">:</span><span class="at"> _components</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span><span class="at"> _resources</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">react</span><span class="kw">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">components</span><span class="kw">:</span><span class="at"> _components</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span><span class="at"> _resources</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="gotchas" class="level2">
 <h2 class="anchored" data-anchor-id="gotchas">Gotchas</h2>
@@ -564,7 +599,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <MyComponent/>  </React.StrictMode>,  document.getElementById("react-MyComponent-j8cwW9C5") );</script>
+ReactDOM.render( <React.StrictMode>    <MyComponent/>  </React.StrictMode>,  document.getElementById("react-MyComponent-QVW5FyDj") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
 function MyStyledComponent() {    
     const [text, setText] = React.useState([])
@@ -578,7 +613,7 @@ function MyStyledComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <MyStyledComponent/>  </React.StrictMode>,  document.getElementById("react-MyStyledComponent-4kXijp4f") );</script>
+ReactDOM.render( <React.StrictMode>    <MyStyledComponent/>  </React.StrictMode>,  document.getElementById("react-MyStyledComponent-90EH9afP") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">function getRandomEmoji() {
     const emojis = ["😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊", "😋", "😎", "😍", "😘", "🥰", "😗", "😙", "😚", "🙂", "🤗", "🤩", "🤔", "🤨", "😐", "😑", "😶", "🙄", "😏", "😣", "😥", "😮", "🤐", "😯", "😪", "😫", "😴", "😌", "😛", "😜", "😝", "🤤", "😒", "😓", "😔", "😕", "🙃", "🤑", "😲", "🙁", "😖", "😞", "😟", "😤", "😢", "😭", "😦", "😧", "😨", "😩", "🤯", "😬", "😰", "😱", "🥵", "🥶", "😳", "🤪", "😵", "😡", "😠", "🤬", "😷", "🤒", "🤕", "🤢", "🤮", "🤧", "😇", "🥳", "🥴", "🥺", "🤠", "🤡", "🤥", "🤫", "🤭", "🧐", "🤓", "😈", "👿", "🤖", "🎃", "👏", "🙌", "👍", "👎", "👊", "✊", "🤛", "🤜", "🤚", "👋", "✋", "🖖", "👌", "✌️", "🤞", "🤟", "🤘", "🤙", "💪", "🖕", "✍️", "🙏", "💍", "💄", "💋", "👄", "👅", "👂", "👃", "👣", "👁", "👀", "🧠", "🦷", "🦴", "👦", "👧", "🧒", "👶", "👩", "🧑", "👨"]
     return emojis[Math.floor(Math.random() * emojis.length)]
@@ -598,7 +633,7 @@ function EmojiComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <EmojiComponent/>  </React.StrictMode>,  document.getElementById("react-EmojiComponent-S9dkmbif") );</script>
+ReactDOM.render( <React.StrictMode>    <EmojiComponent/>  </React.StrictMode>,  document.getElementById("react-EmojiComponent-uvTZK4rj") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
 import * as randomWords from 'https://cdn.jsdelivr.net/npm/random-words/+esm';
 function RandomWordsComponent() {
@@ -612,7 +647,7 @@ function RandomWordsComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <RandomWordsComponent/>  </React.StrictMode>,  document.getElementById("react-RandomWordsComponent-7MwzpgvL") );</script>
+ReactDOM.render( <React.StrictMode>    <RandomWordsComponent/>  </React.StrictMode>,  document.getElementById("react-RandomWordsComponent-ml2lhibG") );</script>
 <script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
 import * as randomWords from 'https://cdn.jsdelivr.net/npm/random-words/+esm';
 function RandomWordsComponent() {
@@ -658,7 +693,34 @@ function MyNestedComponent() {
     );
   }
 
-ReactDOM.render( <React.StrictMode>    <MyNestedComponent/>  </React.StrictMode>,  document.getElementById("react-MyNestedComponent-RITlrxxa") );</script>
+ReactDOM.render( <React.StrictMode>    <MyNestedComponent/>  </React.StrictMode>,  document.getElementById("react-MyNestedComponent-K0DTFZWM") );</script>
+<script type="text/babel" data-type="module" data-presets="env-plus,react,typescript">
+import * as randomWords from "https://cdn.jsdelivr.net/npm/random-words/+esm";
+function EnvironmentReadingComponent() {
+  const [text, setText] = React.useState([
+    randomWords.generate({ maxLength: 8 }),
+  ]);
+  return (
+    <div
+      onClick={() =>
+        setText((previous) => [
+          ...previous,
+          randomWords.generate({ maxLength: 8 }),
+        ])
+      }
+    >
+      <div className="styled-component-container">
+        {text.map((value) => (
+          <span className="wrapper-for-other-component">{value}</span>
+        ))}
+      </div>
+      <div>Environment variables: {process.env.QREACTO_FOO}</div>
+      <div>Environment variables: {process.env.QREACTO_TEST}</div>
+    </div>
+  );
+}
+
+ReactDOM.render( <React.StrictMode>    <EnvironmentReadingComponent/>  </React.StrictMode>,  document.getElementById("react-EnvironmentReadingComponent-pT4e4WjI") );</script>
 
 
 

@@ -126,11 +126,11 @@
     "text": "Nesting components\nCreate your component with the nested components imported and in the jsx\nimport RandomWordsComponent from \"./RandomWordsComponent\";\nimport EmojiComponent from \"./EmojiComponent\";\n\nfunction MyNestedComponent() {\n    return (\n      &lt;div&gt;\n        &lt;RandomWordsComponent/&gt;\n        &lt;EmojiComponent/&gt;\n      &lt;/div&gt;\n    );\n  }\n\nexport default MyNestedComponent\nadd it to your markdown file with {{&lt; react MyNestedComponent &gt;}} and see the results:"
   },
   {
-    "objectID": "example.html#configuring",
-    "href": "example.html#configuring",
+    "objectID": "example.html#using-environment-variables",
+    "href": "example.html#using-environment-variables",
     "title": "Qreacto",
-    "section": "Configuring",
-    "text": "Configuring\nYou can (optionally) specify the location for your components and resources\n    react:\n        components: _components\n        resources: _resources"
+    "section": "Using environment variables",
+    "text": "Using environment variables\nAdd your environment variables as specified on the official documentation Qreacto will pick up environment variables that begin with QREACTO_ They can then be accessed with process.env....’’’\n\nThe enviornment file:\nQREACTO_FOO=bar\nQREACTO_TEST=Very true\nResults in:\n {\n  env: { \n      QREACTO_FOO:\"bar\"\n      QREACTO_TEST:\"Very true\"\n  }\n }\nand can be accessed with:\n console.log(process.env.QREACTO_FOO)\n console.log(process.env.QREACTO_TEST)\nNote Qreacto only looks for _environment files, not iterations of this file (eg _environment-dev, _environment-prod) ## Configuring\nYou can (optionally) specify the location for your components and resources\n    react:\n        components: _components\n        resources: _resources"
   },
   {
     "objectID": "example.html#gotchas",
